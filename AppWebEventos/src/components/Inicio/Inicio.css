@@ -1,0 +1,20 @@
+.Inicio {
+    max-width: 800px;
+    margin: 0 auto;
+}
+  
+.descripcion-tienda {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.productos-destacados {
+    margin-top: 40px;
+}
+
+a {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
