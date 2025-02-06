@@ -1,7 +1,5 @@
 import './Producto.css';
 
-import * as React from 'react';
-import { useState } from 'react';
 
 function Producto() {
     
@@ -33,6 +31,7 @@ function Producto() {
                 />
                 <button>Buscar</button>
             </div>
+        </div>
         
     );
 }

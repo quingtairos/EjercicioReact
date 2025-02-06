@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 
 import Inicio from './components/Inicio/Inicio';
+import Productos from './components/Productos';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,6 +11,7 @@ function App() {
     <>
       <div className="App">
         <Inicio />
+        <Productos />
       </div>
     </>
   )
