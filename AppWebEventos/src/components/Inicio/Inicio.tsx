@@ -34,6 +34,17 @@ import './Inicio.css';
                     <div className="productos-destacados">
                         <h2>Productos destacados</h2>
 
+                        <div className="listaproductos">
+                            {productosDestacados.map((producto) => (
+                            <div key={producto.id} className="producto">
+                                <h3>{producto.nombre}</h3>
+                                <p>Precio: ${producto.precio}</p>
+                                {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
+                               
+                            </div>
+                            ))}
+                        </div>
+
                         <p>Si quieres ver los productos destacados, haz click en el botón "Productos destacados".</p>
                         <p>Si quieres ver los productos más vendidos, haz click en el botón "Productos más vendidos".</p>
                         <p>Si quieres ver los productos más buscados, haz click en el botón "Productos más buscados".</p> 
