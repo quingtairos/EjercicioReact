@@ -41,17 +41,38 @@ import './Inicio.css';
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                
+                                <a href={"../DetalleProducto/DetalleProducto.tsx"}>Ver detalles</a>
                             </div>
                             ))}
                         </div>
 
-                        <p>Si quieres ver los productos destacados, haz click en el botón "Productos destacados".</p>
-                        <p>Si quieres ver los productos más vendidos, haz click en el botón "Productos más vendidos".</p>
-                        <p>Si quieres ver los productos más buscados, haz click en el botón "Productos más buscados".</p> 
+                        <h2>Eventos</h2>
+        
+                            <div className="eventos">
+                                Tenemos varios tipos de eventos.
+                                Algunos de los más solicitados son:
+                                <p>
+                                <img src="../../assets/img/fest.jpeg" alt="festivales" />
+                                FESTIVALES
+                                <br />
+                                <small>de todo tipo</small>
+                                    <br />
+                                CONCIERTOS
+                                <br />
+                                Bodas 
+                                <br />
+                                <small>y celebración de fiestas de boda</small>
+                                <br />
+                                Servicio de Catterin
+                                </p>
+                                </div>
 
-                        <a href={"../DetalleProducto/DetalleProducto.tsx"}>Ver detalles</a>
-                    </div>
-            </div>
+                                            <p>Si quieres ver los productos destacados, haz click en el botón "Productos destacados".</p>
+                                            <p>Si quieres ver los productos más vendidos, haz click en el botón "Productos más vendidos".</p>
+                                            <p>Si quieres ver los productos más buscados, haz click en el botón "Productos más buscados".</p> 
+
+                                        </div>
+                                </div>
         )
     };
 

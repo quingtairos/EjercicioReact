@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 
+import Header from './components/Header/Header';
 import Inicio from './components/Inicio/Inicio';
 import Productos from './components/Productos';
 
@@ -12,6 +13,7 @@ function App() {
       <div className="App">
         <Inicio />
         <Productos />
+        <Header />
       </div>
     </>
   );
