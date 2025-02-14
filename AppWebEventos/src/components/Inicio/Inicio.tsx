@@ -5,7 +5,6 @@ import './Inicio.css';
 
 //import fest from './assets/img/fest.jpeg';
 
-//import GestionEventosPagina from '../';
 
     const Inicio = () => {
 
