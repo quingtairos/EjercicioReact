@@ -1,0 +1,36 @@
+ul {
+    list-style-type: none;
+    display: flex;
+}
+
+li {
+    /* margin-right: 20px; */
+    margin: auto;
+}
+
+a {
+    text-decoration-line: none;
+    color: white;
+}
+
+header {
+    /* background-color: orange;
+    color: white;
+    padding: 10px; */
+    margin-top: 0;
+    display: grid;
+}
+
+nav {
+    display: flex;
+    /* justify-content: space-between;
+    align-items: center; */
+    background-color: orange;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 10px;
+}
