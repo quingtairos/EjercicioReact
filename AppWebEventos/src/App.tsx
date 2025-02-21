@@ -4,6 +4,10 @@ import Inicio from './components/Inicio/Inicio';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
+
+import DetallesProducto from './components/DetalleProducto/DetalleProducto';
+import IniciarSesion from './components/Login/Login';
+
 function App() {
   //const [count, setCount] = useState(0)
 

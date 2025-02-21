@@ -1,5 +1,7 @@
 import './DetalleProducto.css';
 
+import { Link } from 'react-router-dom';
+
 function DetalleProducto() {
     
     const producto = {
@@ -19,7 +21,7 @@ function DetalleProducto() {
             
             {/* Verificar si el usuario está autenticado */}
             <div className="acciones">
-                <a href="../Login/Login.tsx">Iniciar Sesión para Comprar</a>
+            <Link to="/iniciar-sesion">Iniciar Sesión para Comprar</Link>
             </div>
         </div>
             
