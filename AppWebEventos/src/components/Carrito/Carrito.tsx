@@ -28,10 +28,24 @@ function Carrito() {
                     <li>Producto 5</li>
                 </ul>
                 <p>Total: $80</p>
+
+                {productosEnCarrito.length === 0 ? (
+        <p>El carrito está vacío.</p>
+      ) : (
+        <div className="lista-productos">
+          {productosEnCarrito.map((producto) => (
+            <div key={producto.id} className="producto-en-carrito">
+              <h3>{producto.nombre}</h3>
+              <p>Precio: ${producto.precio}</p>
+              
                 <button onClick={() => eliminarDelCarrito(producto.id)}>Eliminar</button>
-            </div>
-        );
+                </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
         
     }
-    
+
 }
