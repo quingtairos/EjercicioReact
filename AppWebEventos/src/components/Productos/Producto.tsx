@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import './Producto.css';
 
 
-function Producto() {
+function Producto(datosProductos: void) {
     
    /*  const [productos, setProductos] = useState([
         { id: 1, nombre: 'Producto 1', precio: 20.99 },
@@ -10,6 +11,16 @@ function Producto() {
         { id: 4, nombre: 'Producto 4', precio: 5.49 },
         { id: 5, nombre: 'Producto 5', precio: 25.99 }
     ]); */
+
+    const [productos, setProductos] = useState([]);
+    const [filtroCategoria, setFiltroCategoria] = useState('');
+    const [filtroPrecio, setFiltroPrecio] = useState('');
+    const [busquedaTexto, setBusquedaTexto] = useState('');
+
+    useEffect(() => {
+        const datosProductos = obtenerProductosDesdeBaseDeDatos();
+        Producto(datosProductos);
+      }, []);
 
     return (
        
@@ -37,3 +48,7 @@ function Producto() {
 }
 
 export default Producto;
+
+function obtenerProductosDesdeBaseDeDatos() {
+    throw new Error('Function not implemented.');
+}
