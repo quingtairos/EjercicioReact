@@ -11,10 +11,20 @@ function DetalleProducto() {
     };
 
     return (
-        <div className="container">
-            <h1>Detalle del producto</h1>
-
+        <div className="DetallesProducto">
+            <h1>DetalleS del producto</h1>
+            <h2>{producto.nombre}</h2>
+            <p>Precio: ${producto.precio}</p>
+            <p>{producto.descripcion}</p>
+            
+            {/* Verificar si el usuario está autenticado */}
+            <div className="acciones">
+                <a href="../Login/Login.tsx">Iniciar Sesión para Comprar</a>
+            </div>
         </div>
+            
+
+        
     );
 }
 

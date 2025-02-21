@@ -1,24 +1,14 @@
 import './Header.css';
 
+import Producto from '../Productos';
+
+import Carrito from '../Carrito';
+
+import Login from '../Login';
+
+import Registro from '../Registro';
 
 const Header = () => {
-
-    return (
-        <header className='text-light'>
-            <nav>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/productos">Productos/EVENTOS</a></li>
-                    <li><a href="/contacto">Contacto</a></li>
-                    <li><a href="/carrito">Carrito</a></li>
-                    <li><a href="/sobreNos">Acerca de</a></li>
-                    <img src="../../assets/img/user-circle.png" alt="" />
-                    <li><a href="/login">Iniciar Sesión</a></li>
-                    <li><a href="/registro">Registrarse</a></li>
-                </ul>
-            </nav>
-        </header>
-    )
     
     /* return (
         <div className="Header">
@@ -42,6 +32,23 @@ const Header = () => {
         </div> 
         
     );*/
+
+    return (
+        <header className='text-light'>
+            <nav>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="../Productos/Producto.tsx">Productos/EVENTOS</a></li>
+                    <li><a href="/contacto">Contacto</a></li>
+                    <li><a href="../Carrito/Carrito.tsx">Carrito</a></li>
+                    <li><a href="/sobreNos">Acerca de</a></li>
+                    <img src="../../assets/img/user-circle.png" alt="" />
+                    <li><a href="../Login/Login.tsx">Iniciar Sesión</a></li>
+                    <li><a href="../Registro/Registro.tsx">Registrarse</a></li>
+                </ul>
+            </nav>
+        </header>
+    )
 }
 
 export default Header;
