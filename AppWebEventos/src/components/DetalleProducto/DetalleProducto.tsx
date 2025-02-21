@@ -2,7 +2,8 @@ import './DetalleProducto.css';
 
 import { Link } from 'react-router-dom';
 
-function DetalleProducto() {
+function DetalleProducto( { match }) {
+    const { id } = match.params;
     
     const producto = {
         id: id,//1,
@@ -12,6 +13,11 @@ function DetalleProducto() {
         /* imagen: 'https://picsum.photos/200/300',*/
     };
 
+    const agregarAlCarrito = () => {
+        
+        console.log(`Producto ${producto.nombre} agregado al carrito.`);
+    };
+
     return (
         <div className="DetallesProducto">
             <h1>DetalleS del producto</h1>
@@ -19,8 +25,10 @@ function DetalleProducto() {
             <p>Precio: ${producto.precio}</p>
             <p>{producto.descripcion}</p>
             
-            {/* Verificar si el usuario está autenticado */}
+           
             <div className="acciones">
+            <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
+            
             <Link to="/iniciar-sesion">Iniciar Sesión para Comprar</Link>
             </div>
         </div>
