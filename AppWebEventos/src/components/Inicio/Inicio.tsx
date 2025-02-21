@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import './Inicio.css';
+
 
 
 //import { Link } from 'react-router-dom';
@@ -40,7 +42,8 @@ import './Inicio.css';
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                
-                                <a href={"../DetalleProducto/DetalleProducto.tsx"}>Ver detalles</a>
+                                <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
+
                             </div>
                             ))}
                         </div>
