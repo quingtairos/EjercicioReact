@@ -2,24 +2,25 @@ import './App.css';
 
 import Inicio from './components/Inicio/Inicio';
 
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 
-import DetallesProducto from './components/DetalleProducto/DetalleProducto';
+import React from 'react';
+import DetalleProducto from './components/DetalleProducto/DetalleProducto';
 import IniciarSesion from './components/Login/Login';
 
-function App() {
+const App: React.FC = () => {
   //const [count, setCount] = useState(0)
 
   return (
     
     <Router>
       <div className="App">
-        <Switch>
-          <Route path="/" exact component={Inicio} />
-          <Route path="/detalles/:id" component={DetallesProducto} />
-          <Route path="/iniciar-sesion" component={IniciarSesion} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={< Inicio />} />
+          <Route path="/detalles/:id" element={<DetalleProducto match={undefined} />} />
+          <Route path="/iniciar-sesion" element={<IniciarSesion />} />
+        </Routes>
       </div>
     </Router>
   
