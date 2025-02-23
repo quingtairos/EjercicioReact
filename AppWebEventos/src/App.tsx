@@ -18,7 +18,7 @@ const App: React.FC = () => {
       <div className="App">
         <Routes>
           <Route path="/" element={< Inicio />} />
-          <Route path="/detalles/:id" element={<DetalleProducto match={undefined} />} />
+          <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
           <Route path="/iniciar-sesion" element={<IniciarSesion />} />
         </Routes>
       </div>

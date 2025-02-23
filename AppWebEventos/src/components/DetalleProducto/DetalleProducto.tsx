@@ -6,7 +6,7 @@ import './DetalleProducto.css';
 import { Link, useParams } from 'react-router-dom';
 
 const DetalleProducto: React.FC = ( /* { match } */) => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: integer }>();
     
     const producto: Producto = {
         id: id,//1,
