@@ -1,14 +1,13 @@
 import './Header.css';
 
-import Producto from '../Productos';
 
-import Carrito from '../Carrito';
 
-import Login from '../Login';
 
-import Registro from '../Registro';
 
-const Header = () => {
+import { FC } from 'react';
+
+
+const Header: FC = () => {
     
     /* return (
         <div className="Header">
@@ -42,13 +41,13 @@ const Header = () => {
                     <li><a href="/contacto">Contacto</a></li>
                     <li><a href="../Carrito/Carrito.tsx">Carrito</a></li>
                     <li><a href="/sobreNos">Acerca de</a></li>
-                    <img src="../../assets/img/user-circle.png" alt="" />
+                    <img src="../../assets/img/user-circle.png" alt="PERFIL" />
                     <li><a href="../Login/Login.tsx">Iniciar Sesión</a></li>
                     <li><a href="../Registro/Registro.tsx">Registrarse</a></li>
                 </ul>
             </nav>
         </header>
-    )
-}
+    );
+};
 
 export default Header;
