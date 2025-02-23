@@ -1,8 +1,6 @@
 import './Carrito.css';
 
 function Carrito() {
-
-    function Carrito() {
     
         const productosEnCarrito = [
             { id: 1, nombre: 'Producto 1', precio: 20.99 },
@@ -12,7 +10,7 @@ function Carrito() {
             { id: 5, nombre: 'Producto 5', precio: 25.99 }
         ];
     
-        const eliminarDelCarrito = (id) => {
+        const eliminarDelCarrito = (id: number) => {
             
             console.log(`Producto con ID ${id} eliminado del carrito.`);
         };
@@ -46,6 +44,7 @@ function Carrito() {
     </div>
   );
         
-    }
 
 }
+
+export default Carrito;
