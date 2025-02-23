@@ -6,7 +6,7 @@ import './DetalleProducto.css';
 import { Link, useParams } from 'react-router-dom';
 
 const DetalleProducto: React.FC = ( /* { match } */) => {
-    const { id } = useParams<{ id: integer }>();
+    const { id } = useParams<{ id: string }>();
     
     const producto: Producto = {
         id: id,//1,
@@ -16,7 +16,7 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
         /* imagen: 'https://picsum.photos/200/300',*/
     };
 
-    const agregarAlCarrito = () => {
+    const agregarAlCarrito: React.MouseEventHandler<HTMLButtonElement> = (/* event */) => {
         
         console.log(`Producto ${producto.nombre} agregado al carrito.`);
     };
