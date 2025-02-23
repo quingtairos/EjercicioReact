@@ -1,11 +1,14 @@
+import React from 'react';
+import { Producto } from '../../types/Producto';
 import './DetalleProducto.css';
 
-import { Link } from 'react-router-dom';
 
-function DetalleProducto( { match }) {
-    const { id } = match.params;
+import { Link, useParams } from 'react-router-dom';
+
+const DetalleProducto: React.FC = ( /* { match } */) => {
+    const { id } = useParams<{ id: string }>();
     
-    const producto = {
+    const producto: Producto = {
         id: id,//1,
         nombre: 'Producto ' + id,
         precio: 25.99,
@@ -36,6 +39,6 @@ function DetalleProducto( { match }) {
 
         
     );
-}
+};
 
 export default DetalleProducto;
