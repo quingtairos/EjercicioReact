@@ -2,26 +2,46 @@ import { useEffect, useState } from 'react';
 import './Producto.css';
 
 
-function Producto(datosProductos: void) {
+
+import { Producto } from '../../types/Producto';
+
+function Producto(/* datosProductos: void */) {
     
-   /*  const [productos, setProductos] = useState([
-        { id: 1, nombre: 'Producto 1', precio: 20.99 },
+    const [productos, setProductos] = useState<Producto[]>([
+        /* { id: 1, nombre: 'Producto 1', precio: 20.99 },
         { id: 2, nombre: 'Producto 2', precio: 15.49 },
         { id: 3, nombre: 'Producto 3', precio: 10.99 },
         { id: 4, nombre: 'Producto 4', precio: 5.49 },
-        { id: 5, nombre: 'Producto 5', precio: 25.99 }
-    ]); */
+        { id: 5, nombre: 'Producto 5', precio: 25.99 } */
+    ]);
 
-    const [productos, setProductos] = useState([]);
-    const [filtroCategoria, setFiltroCategoria] = useState('');
-    const [filtroPrecio, setFiltroPrecio] = useState('');
-    const [busquedaTexto, setBusquedaTexto] = useState('');
+    //const [productos, setProductos] = useState([]);
+    const [filtroCategoria, setFiltroCategoria] = useState<string>('');
+    const [filtroPrecio, setFiltroPrecio] = useState<string>('');
+    const [busquedaTexto, setBusquedaTexto] = useState<string>('');
 
     useEffect(() => {
         const datosProductos = obtenerProductosDesdeBaseDeDatos();
-        Producto(datosProductos);
+        setProductos(datosProductos);
       }, []);
 
+      const productosFiltrados = productos
+      .filter(producto => producto.categoria.includes(filtroCategoria))
+      .filter(producto => filtroPrecio === '' || producto.precio <= parseInt(filtroPrecio))
+      .filter(producto => busquedaTexto === '' || producto.nombre.toLowerCase().includes(busquedaTexto.toLowerCase()) || producto.descripcion.toLowerCase().includes(busquedaTexto.toLowerCase()));
+
+
+      const productosPorPagina = 10;
+      const [paginaActual, setPaginaActual] = useState<number>(1);
+      const indiceInicial = (paginaActual - 1) * productosPorPagina;
+      const indiceFinal = indiceInicial + productosPorPagina;
+      const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
+
+      const cambiarPagina = (numeroPagina: number) => {
+        setPaginaActual(numeroPagina);
+      };
+
+      
     return (
        
         <div className="productos">
@@ -29,6 +49,8 @@ function Producto(datosProductos: void) {
                 <input 
                     type='text' 
                     placeholder='Buscar producto' 
+                    value={busquedaTexto}
+                    onChange={(evento) => setBusquedaTexto(evento.target.value)}
                 />
                 <select>
                     <option value=''>Todas las categorías</option>
@@ -43,6 +65,8 @@ function Producto(datosProductos: void) {
                 <button>Buscar</button>
             </div>
         </div>
+
+        
         
     );
 }
