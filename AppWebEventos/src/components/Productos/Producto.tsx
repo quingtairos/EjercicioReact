@@ -45,7 +45,7 @@ function Producto(/* datosProductos: void */) {
     return (
        
         <div className="productos">
-            <div className='busqueda'>
+            <div className='busqueda/filtros'>
                 <input 
                     type='text' 
                     placeholder='Buscar producto' 
@@ -60,13 +60,30 @@ function Producto(/* datosProductos: void */) {
                 <input 
                     type='number' 
                     placeholder='Precio máximo' 
-                    value=""
+                    value={precioMax}
                 />
                 <button>Buscar</button>
             </div>
-        </div>
 
-        
+            <div className="lista-productos">
+                {productosPaginados.map((producto) => (
+                <div key={producto.id} className="producto">
+                    <h3>{producto.nombre}</h3>
+                    <p>Precio: ${producto.precio}</p>
+                    <p>Categoría: {producto.categoria}</p>
+                    <p>Descripción: {producto.descripcion}</p>
+                    <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
+                </div>
+                ))}
+            </div>
+
+            <div className="paginacion">
+                {Array.from({ length: Math.ceil(productosFiltrados.length / productosPorPagina) }, (_, index) => (
+                <button key={index + 1} onClick={() => cambiarPagina(index + 1)}>{index + 1}</button>
+                ))}
+            </div>
+
+        </div>
         
     );
 }
