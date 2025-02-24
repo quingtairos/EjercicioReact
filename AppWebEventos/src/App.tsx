@@ -20,11 +20,10 @@ const App: React.FC = () => {
   
       <div className="App">
         <header>
-          <h1>Bienvenido a mi página</h1>
           <Header />
         </header>
         <main>
-          <p>Contenido principal de la web.</p>
+          {/* <p>Contenido principal de la web.</p> */}
           <Router>
           <Routes>
             <Route path="/" element={< Inicio />} />
