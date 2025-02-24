@@ -15,6 +15,10 @@ function Carrito() {
             console.log(`Producto con ID ${id} eliminado del carrito.`);
         };
     
+  function calcularPrecioTotal(): import("react").ReactNode {
+    throw new Error('Function not implemented.');
+  }
+
         return (
             <div className="carrito">
                 <h2>Carrito</h2>
@@ -29,18 +33,21 @@ function Carrito() {
 
                 {productosEnCarrito.length === 0 ? (
         <p>El carrito está vacío.</p>
-      ) : (
-        <div className="lista-productos">
-          {productosEnCarrito.map((producto) => (
-            <div key={producto.id} className="producto-en-carrito">
-              <h3>{producto.nombre}</h3>
-              <p>Precio: ${producto.precio}</p>
-              
-                <button onClick={() => eliminarDelCarrito(producto.id)}>Eliminar</button>
-                </div>
-          ))}
-        </div>
-      )}
+          ) : (
+            <>
+              <div className="lista-productos">
+                {productosEnCarrito.map((producto) => (
+                  <div key={producto.id} className="producto-en-carrito">
+                    <h3>{producto.nombre}</h3>
+                    <p>Precio: ${producto.precio}</p>
+                    
+                      <button onClick={() => eliminarDelCarrito(producto.id)}>Eliminar</button>
+                    </div>
+                ))}
+              </div>
+              <p>precio Total: ${calcularPrecioTotal()}</p>
+            </>
+          )}
     </div>
   );
         
