@@ -2,9 +2,6 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 
 
-
-
-
 import { FC } from 'react';
 
 

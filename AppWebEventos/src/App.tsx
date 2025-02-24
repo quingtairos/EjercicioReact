@@ -20,12 +20,13 @@ const App: React.FC = () => {
   return (
   
       <div className="App">
-        <header>
+      {/*   <header>
           <Header />
-        </header>
+        </header> */}
         <main>
           {/* <p>Contenido principal de la web.</p> */}
           <Router>
+            <Header />
             <Routes>
               <Route path="/" element={< Inicio />} />
               <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
