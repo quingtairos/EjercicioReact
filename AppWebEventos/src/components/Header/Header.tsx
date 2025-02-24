@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 
@@ -36,14 +37,14 @@ const Header: FC = () => {
         <header className='text-light'>
             <nav>
                 <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="../Productos/Producto.tsx">Productos/EVENTOS</a></li>
-                    <li><a href="/contacto">Contacto</a></li>
-                    <li><a href="../Carrito/Carrito.tsx">Carrito</a></li>
-                    <li><a href="/sobreNos">Acerca de</a></li>
+                    <li><Link to="/">Inicio</Link></li>
+                    <li><Link to="../Productos/Producto.tsx">Productos/EVENTOS</Link></li>
+                    <li><Link to="/contacto">Contacto</Link></li>
+                    <li><Link to="../Carrito/Carrito.tsx">Carrito</Link></li>
+                    <li><Link to="/sobreNos">Acerca de</Link></li>
                     <img src="../../assets/img/user-circle.png" alt="PERFIL" />
-                    <li><a href="../Login/Login.tsx">Iniciar Sesión</a></li>
-                    <li><a href="../Registro/Registro.tsx">Registrarse</a></li>
+                    <li><Link to="../Login/Login.tsx">Iniciar Sesión</Link></li>
+                    <li><Link to="../Registro/Registro.tsx">Registrarse</Link></li>
                 </ul>
             </nav>
         </header>
