@@ -1,0 +1,32 @@
+.Productos {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  .busquedaYfiltros {
+    margin-bottom: 20px;
+  }
+  
+  .lista-productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .producto {
+    border: 1px solid #ccc;
+    padding: 10px;
+    flex: 1 0 calc(33.33% - 20px); /* 3 productos por fila */
+  }
+  
+  .paginacion {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .paginacion button {
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
