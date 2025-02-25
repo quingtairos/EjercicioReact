@@ -12,6 +12,7 @@ import DetalleProducto from './components/DetalleProducto/DetalleProducto';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import IniciarSesion from './components/Login/Login';
+import Producto from './components/Productos';
 import Registro from './components/Registro/Registro';
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
             <Header />
             <Routes>
               <Route path="/" element={< Inicio />} />
+              <Route path="/productos" element={<Producto />} />
               <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
               <Route path="/carrito" Component={Carrito} />
               <Route path="/iniciar-sesion" element={<IniciarSesion />} />
