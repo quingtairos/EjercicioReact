@@ -1,4 +1,4 @@
-export interface Producto {
+export interface getProductos {
     categoria: any;
     id: string;
     nombre: string;

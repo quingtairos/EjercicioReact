@@ -1,23 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Producto.css';
 
+import { getProductos } from '../../App';
 
-import { Producto } from '../../types/Producto';
 
-import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import { db } from '../../firebase/firebaseConfig';
-
-export const getProductos = async (): Promise<Producto[]> => {
-    try {
-      const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
-      const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
-      return productosList;
-    } catch (error) {
-      console.error('Error al obtener los productos:', error);
-      return [];
-    }
-  };
 
 function Producto(/* datosProductos: void */) {
     
@@ -171,7 +158,7 @@ function Producto(/* datosProductos: void */) {
             </div> */}
 
             <div className="lista-productos">
-                    {productos.map((producto) => (
+                    {productosPaginados.map((producto) => (
                     <div key={producto.id} className="producto">
                         <h3>{producto.nombre}</h3>
                         <p>Precio: ${producto.precio}</p>
@@ -205,6 +192,17 @@ function Producto(/* datosProductos: void */) {
         
     );
 }
+
+/* export const getProductos = async (): Promise<Producto[]> => {
+    try {
+      const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
+      const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+      return productosList;
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+      return [];
+    }
+  }; */
 
 export default Producto;
 
