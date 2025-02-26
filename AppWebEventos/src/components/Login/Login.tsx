@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import './Login.css';
 
 function Login() {
+
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
+    const [contraseña, setContraseña] = useState('');
 
     return (
         <div className='container'>
