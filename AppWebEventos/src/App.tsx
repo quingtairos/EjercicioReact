@@ -5,18 +5,29 @@ import Inicio from './components/Inicio/Inicio';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Carrito from './components/Carrito';
-import DetalleProducto from './components/DetalleProducto/DetalleProducto';
+import DetalleProducto from './components/DetalleProducto/';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import IniciarSesion from './components/Login/Login';
+import IniciarSesion from './components/Login';
 import Producto from './components/Productos';
-import Registro from './components/Registro/Registro';
+//import { getProductos } from './components/Productos/Producto';
+import Registro from './components/Registro';
 
 const App: React.FC = () => {
   //const [count, setCount] = useState(0)
+  const [productos, setProductos] = useState<Producto[]>([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      const productosData = await getProductos();
+      setProductos(productosData);
+    };
+    
+    fetchProductos();
+  }, []);
 
   return (
   
@@ -24,7 +35,7 @@ const App: React.FC = () => {
       {/*   <header>
           <Header />
         </header> */}
-        <main>
+       {/*  <main> */}
           {/* <p>Contenido principal de la web.</p> */}
           <Router>
             <Header />
@@ -32,20 +43,25 @@ const App: React.FC = () => {
               <Route path="/" element={< Inicio />} />
               <Route path="/productos" element={<Producto />} />
               <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
-              <Route path="/carrito" Component={Carrito} />
+              <Route path="/carrito" element={<Carrito />} />
               <Route path="/iniciar-sesion" element={<IniciarSesion />} />
               <Route path="/registro" element={<Registro />} />
             </Routes>
+            <Footer />
           </Router>
-        </main>
+        {/* </main> */}
 
-        <footer>
+       {/*  <footer>
           <Footer />
-        </footer>
+        </footer> */}
       </div>
         
   );
-}
+};
 
 
 export default App;
+
+/* function useEffect(arg0: () => void, arg1: never[]) {
+  throw new Error('Function not implemented.');
+} */

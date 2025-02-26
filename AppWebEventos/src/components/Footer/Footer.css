@@ -5,10 +5,13 @@ footer {
     /*margin-bottom: auto;
     /* padding: 20px;
     bottom: 0 */;
-    position: absolute;
+    /*position: absolute;
     width: 100vw;
     /* left: 0;
     top: 70%; */
+    margin-top: 100%;
+    margin-bottom: -16px;
+    display: block;
 
 }
 

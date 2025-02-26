@@ -2,18 +2,15 @@ import { useEffect, useState } from 'react';
 import './Producto.css';
 
 
-import { Link } from 'react-router-dom';
 import { Producto } from '../../types/Producto';
+
+import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
+import { db } from '../../firebase/firebaseConfig';
 
 function Producto(/* datosProductos: void */) {
     
-    const [productos, setProductos] = useState<Producto[]>([
-        /* { id: 1, nombre: 'Producto 1', precio: 20.99 },
-        { id: 2, nombre: 'Producto 2', precio: 15.49 },
-        { id: 3, nombre: 'Producto 3', precio: 10.99 },
-        { id: 4, nombre: 'Producto 4', precio: 5.49 },
-        { id: 5, nombre: 'Producto 5', precio: 25.99 } */
-    ]);
+    const [productos, setProductos] = useState<Producto[]>([]);
 
     //const [productos, setProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState<string>('');
@@ -21,7 +18,28 @@ function Producto(/* datosProductos: void */) {
     const [busquedaTexto, setBusquedaTexto] = useState<string>('');
     const [precioMax, setPrecioMax] = useState<string>('');
 
+    //const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]);
+
     useEffect(() => {
+        const cargarProductos = async () => {
+          const productosData = await getProductos();
+          setProductos(productosData);
+        };
+        cargarProductos();
+      }, []);
+
+      const getProductos = async (): Promise<Producto[]> => {
+        try {
+          const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
+          const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+          return productosList;
+        } catch (error) {
+          console.error('Error al obtener los productos:', error);
+          return [];
+        }
+      };
+
+    /* useEffect(() => {
         const fetchProductos = async () => {
             try {
                 const datosProductos = await obtenerProductosDesdeBaseDeDatos();
@@ -32,7 +50,16 @@ function Producto(/* datosProductos: void */) {
             }
         };
         fetchProductos();
-      }, []);
+      }, []); */
+
+      /* useEffect(() => {
+        const cargarProductos = async () => {
+          const datos = await obtenerProductosDesdeBaseDeDatos();
+          setProductos(datos);
+        };
+        cargarProductos();
+      }, []); */
+      
 
       const productosFiltrados = productos
       .filter(producto => producto.categoria.includes(filtroCategoria))
@@ -58,13 +85,39 @@ function Producto(/* datosProductos: void */) {
         setPrecioMax(evento.target.value);
       };
 
+      /* const obtenerProductosDesdeBaseDeDatos = async () => {
+        const productosCollection = collection(db, 'productos');
+        const productosSnapshot = await getDocs(productosCollection);
+        const productosList = productosSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        return productosList;
+      }; */
+      
+
       //obtiene los productos de la bd
       async function obtenerProductosDesdeBaseDeDatos(): Promise<Producto[]> {
-        const response = await fetch('http://firebase.google.com/');
+        const response = await fetch('https://console.firebase.google.com/u/0/project/app-auth-web/firestore');
         const data = await response.json();
         return data;
     }
     
+        /* const getProductos = async (): Promise<Producto[]> => {
+            try {
+              const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, "productos"));
+              const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+              return productosList;
+            } catch (error) {
+              console.error("Error al obtener los productos:", error);
+              return [];
+            }
+          }; */
+
+
+
+//export { getProductos };
+          
 
       
     return (
@@ -94,17 +147,30 @@ function Producto(/* datosProductos: void */) {
                 <button>Buscar</button>
             </div>
 
-            <div className="lista-productos">
+            {/* <div className="lista-productos">
                 {productosPaginados.map((producto) => (
                 <div key={producto.id} className="producto">
                     <h3>{producto.nombre}</h3>
                     <p>Precio: ${producto.precio}</p>
                     {/* <p>Categoría: {producto.categoria}</p> */}
-                    <p>Descripción: {producto.descripcion}</p>
+                    {/* <p>Descripción: {producto.descripcion}</p>
                     <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
                 </div>
                 ))}
+            </div> */}
+
+            <div className="lista-productos">
+                    {productos.map((producto) => (
+                    <div key={producto.id} className="producto">
+                        <h3>{producto.nombre}</h3>
+                        <p>Precio: ${producto.precio}</p>
+                        <p>Descripción: {producto.descripcion}</p>
+                        <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+                    </div>
+                    ))}
             </div>
+
+
 
             <div className="paginacion">
                 <button onClick={() => cambiarPagina(paginaActual - 1)} disabled={paginaActual === 1}>
@@ -131,7 +197,7 @@ function Producto(/* datosProductos: void */) {
 
 export default Producto;
 
-function obtenerProductosDesdeBaseDeDatos(): Producto[] {
+/* function obtenerProductosDesdeBaseDeDatos(): Producto[] {
     //array de ejemplo:
     return [
         { id: 1, nombre: 'Producto 1', precio: 20.99, categoria: 'categoria1', descripcion: 'Descripción del producto 1' },
@@ -140,4 +206,4 @@ function obtenerProductosDesdeBaseDeDatos(): Producto[] {
         { id: 4, nombre: 'Producto 4', precio: 5.49, categoria: 'categoria2', descripcion: 'Descripción del producto 4' },
         { id: 5, nombre: 'Producto 5', precio: 25.99, categoria: 'categoria1', descripcion: 'Descripción del producto 5' }
     ];
-}
+} */
