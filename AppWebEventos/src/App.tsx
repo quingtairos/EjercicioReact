@@ -4,6 +4,7 @@ import Inicio from './components/Inicio/Inicio';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
+import { Producto } from './types/Producto';
 
 import React, { useEffect, useState } from 'react';
 
@@ -12,7 +13,7 @@ import DetalleProducto from './components/DetalleProducto/';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import IniciarSesion from './components/Login';
-import Producto, { getProductos } from './components/Productos';
+//import { getProductos } from './components/Productos';
 import Registro from './components/Registro';
 
 
@@ -20,7 +21,7 @@ import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/fires
 
 import { db } from './firebase/firebaseConfig';
 
-export const getProductos = async (): Promise<Producto[]> => {
+const getProductos = async (): Promise<Producto[]> => {
   try {
     const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
     const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
