@@ -4,7 +4,7 @@ import Inicio from './components/Inicio/Inicio';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import { Producto } from './types/Producto';
+//import { Producto } from './types/Producto';
 
 import React, { useEffect, useState } from 'react';
 
@@ -15,6 +15,8 @@ import Header from './components/Header';
 import IniciarSesion from './components/Login';
 //import { getProductos } from './components/Productos';
 import Registro from './components/Registro';
+
+import Producto from './components/Productos';
 
 
 import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/firestore';
