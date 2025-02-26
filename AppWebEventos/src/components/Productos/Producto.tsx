@@ -39,7 +39,7 @@ function Producto(/* datosProductos: void */) {
         cargarProductos();
       }, []);
 
-      const getProductos = async (): Promise<Producto[]> => {
+      /*const getProductos = async (): Promise<Producto[]> => {
         try {
           const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
           const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
@@ -107,7 +107,7 @@ function Producto(/* datosProductos: void */) {
       }; */
       
 
-      //obtiene los productos de la bd
+      /*
       async function obtenerProductosDesdeBaseDeDatos(): Promise<Producto[]> {
         const response = await fetch('https://console.firebase.google.com/u/0/project/app-auth-web/firestore');
         const data = await response.json();
