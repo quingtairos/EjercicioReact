@@ -8,6 +8,17 @@ import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/fires
 import { Link } from 'react-router-dom';
 import { db } from '../../firebase/firebaseConfig';
 
+export const getProductos = async (): Promise<Producto[]> => {
+    try {
+      const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
+      const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+      return productosList;
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+      return [];
+    }
+  };
+
 function Producto(/* datosProductos: void */) {
     
     const [productos, setProductos] = useState<Producto[]>([]);

@@ -13,7 +13,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import IniciarSesion from './components/Login';
 import Producto from './components/Productos';
-//import { getProductos } from './components/Productos/Producto';
+import { getProductos } from './components/Productos/Producto';
 import Registro from './components/Registro';
 
 const App: React.FC = () => {
