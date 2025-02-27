@@ -3,15 +3,13 @@ import './Producto.css';
 
 import { Producto } from '../../types/Producto';
 
-import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/firestore';
 import { db } from '../../firebase/firebaseConfig';
 
-import { getProductos } from '../../App';
 
 
 import { Link } from 'react-router-dom';
 
-const getProductos = async (): Promise<Producto[]> => {
+/* const getProductos = async (): Promise<Producto[]> => {
     try {
       const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
       const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
@@ -20,9 +18,9 @@ const getProductos = async (): Promise<Producto[]> => {
       console.error('Error al obtener los productos:', error);
       return [];
     }
-  };
+  }; */
 
-const Producto = (/* datosProductos: void */) => {
+const Producto: React.FC = (/* datosProductos: void */) => {
     
     const [productos, setProductos] = useState<Producto[]>([]);
 
@@ -34,13 +32,26 @@ const Producto = (/* datosProductos: void */) => {
 
     //const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const cargarProductos = async () => {
           const productosData = await getProductos();
           setProductos(productosData);
         };
         cargarProductos();
-      }, []);
+      }, []); */
+
+      useEffect(() => {
+        const fetchProductos = async () => {
+            const productosSnapshot = await db.collection('productos').get();
+            const productosList: Producto[] = productosSnapshot.docs.map((doc: { id: any; data: () => any; }) => ({
+                id: doc.id,
+                ...doc.data(),
+            })) as Producto[];
+            setProductos(productosList);
+        };
+
+        fetchProductos();
+    }, []);
 
       /*const getProductos = async (): Promise<Producto[]> => {
         try {
@@ -174,7 +185,8 @@ const Producto = (/* datosProductos: void */) => {
             </div> */}
 
             <div className="lista-productos">
-                    {productosPaginados.map((producto) => (
+                    {/* {productosPaginados.map((producto) => ( */}
+                    {productos.map((producto) => (
                     <div key={producto.id} className="producto">
                         <h3>{producto.nombre}</h3>
                         <p>Precio: ${producto.precio}</p>

@@ -50,11 +50,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const cargarProductos = async () => {
-      const productosData = await getProductos();
-      setProductos(productosData);
+        const productosData = await getProductos();
+        setProductos(productosData);
     };
     cargarProductos();
-  }, []);
+}, []);
+
 
   return (
   

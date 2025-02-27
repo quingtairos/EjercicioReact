@@ -1,4 +1,4 @@
-export type Categoria = "fiesta" | "boda" | "conciertos"; 
+export type Categoria = "fiesta" | "boda" | "conciertos";
 
 export interface Producto {
     categoria: Categoria;
@@ -9,3 +9,4 @@ export interface Producto {
     imagen?: string;
     [key: string]: any;
 }
+
