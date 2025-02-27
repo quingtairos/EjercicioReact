@@ -18,7 +18,6 @@ import Registro from './components/Registro';
 
 import Producto from './components/Productos';
 
-
 import { collection, DocumentData, getDocs } from 'firebase/firestore';
 
 import { QuerySnapshot } from 'firebase/firestore/lite';
@@ -100,11 +99,7 @@ const App: React.FC = () => {
   }
 
   if (productos.length === 0) {
-    return <div>No hay productos disponibles.</div>;
-  }
-
-  return (
-  
+    return (
       <div className="App">
       {/*   <header>
           <Header />
@@ -113,6 +108,7 @@ const App: React.FC = () => {
           {/* <p>Contenido principal de la web.</p> */}
           <Router>
             <Header />
+            <div>No hay productos disponibles.</div>;
             <Routes>
               <Route path="/" element={< Inicio />} />
               <Route path="/productos" element={<Producto />} />
@@ -124,13 +120,18 @@ const App: React.FC = () => {
             <Footer />
           </Router>
         {/* </main> */}
+       
 
        {/*  <footer>
           <Footer />
         </footer> */}
       </div>
-        
-  );
+
+      
+    );
+  }
+
+  
 };
 
 

@@ -3,9 +3,9 @@ import './Producto.css';
 
 import { Producto } from '../../types/Producto';
 
-import { collection, db, getDocs } from '../../firebase/firebaseConfig';
+import { db } from '../../firebase/firebaseConfig';
 
-
+import { collection, getDocs } from 'firebase/firestore';
 
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
     }
   }; */
 
-  const getProductos = async (): Promise<Producto[]> => {
+  /* const getProductos = async (): Promise<Producto[]> => {
     try {
       const productosSnapshot = await getDocs(collection(db, 'productos'));
       const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
@@ -29,7 +29,7 @@ import { Link } from 'react-router-dom';
       console.error('Error al obtener los productos:', error);
       throw error; 
     }
-  };
+  }; */
   
 
 const Producto: React.FC = (/* datosProductos: void */) => {
@@ -54,7 +54,7 @@ const Producto: React.FC = (/* datosProductos: void */) => {
 
       
 
-      useEffect(() => {
+      /*useEffect(() => {
         const fetchProductos = async () => {
           try {
               const productosSnapshot = await getDocs(collection(db, 'productos')); 
@@ -67,6 +67,22 @@ const Producto: React.FC = (/* datosProductos: void */) => {
               console.error('Error al obtener productos:', error);
           }
         };
+    }, []);*/
+
+    useEffect(() => {
+      const fetchProductos = async () => {
+        try {
+          const productosSnapshot = await getDocs(collection(db, 'productos'));
+          const productosList: Producto[] = productosSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as Producto[];
+          setProductos(productosList);
+        } catch (error) {
+          console.error('Error al obtener productos:', error);
+        }
+      };
+      fetchProductos();
     }, []);
 
     /* useEffect(() => {
