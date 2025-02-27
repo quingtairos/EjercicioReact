@@ -3,7 +3,7 @@ import './Producto.css';
 
 import { Producto } from '../../types/Producto';
 
-import { db } from '../../firebase/firebaseConfig';
+import { collection, db, getDocs } from '../../firebase/firebaseConfig';
 
 
 
@@ -19,6 +19,18 @@ import { Link } from 'react-router-dom';
       return [];
     }
   }; */
+
+  const getProductos = async (): Promise<Producto[]> => {
+    try {
+      const productosSnapshot = await getDocs(collection(db, 'productos'));
+      const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+      return productosList;
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+      throw error; 
+    }
+  };
+  
 
 const Producto: React.FC = (/* datosProductos: void */) => {
     
@@ -40,18 +52,38 @@ const Producto: React.FC = (/* datosProductos: void */) => {
         cargarProductos();
       }, []); */
 
+      
+
       useEffect(() => {
         const fetchProductos = async () => {
-            const productosSnapshot = await db.collection('productos').get();
-            const productosList: Producto[] = productosSnapshot.docs.map((doc: { id: any; data: () => any; }) => ({
-                id: doc.id,
-                ...doc.data(),
-            })) as Producto[];
-            setProductos(productosList);
+          try {
+              const productosSnapshot = await getDocs(collection(db, 'productos')); 
+              const productosList: Producto[] = productosSnapshot.docs.map(doc => ({
+                  id: doc.id,
+                  ...doc.data(),
+              })) as Producto[];
+              setProductos(productosList);
+          } catch (error) {
+              console.error('Error al obtener productos:', error);
+          }
         };
-
-        fetchProductos();
     }, []);
+
+    /* useEffect(() => {
+      const cargarProductos = async () => {
+        try {
+          const productosData = await getProductos();
+          setProductos(productosData);
+          setError(null);  
+        } catch (error) {
+          setError('No se pudieron obtener los productos. Intenta nuevamente más tarde.');
+        } finally {
+          setLoading(false);  
+        }
+      };
+      cargarProductos();
+    }, []); */
+    
 
       /*const getProductos = async (): Promise<Producto[]> => {
         try {

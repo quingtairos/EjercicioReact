@@ -19,11 +19,12 @@ import Registro from './components/Registro';
 import Producto from './components/Productos';
 
 
-import { collection, DocumentData, getDocs, QuerySnapshot } from 'firebase/firestore';
+import { collection, DocumentData, getDocs } from 'firebase/firestore';
 
+import { QuerySnapshot } from 'firebase/firestore/lite';
 import { db } from './firebase/firebaseConfig';
 
-const getProductos = async (): Promise<Producto[]> => {
+/* const getProductos = async (): Promise<Producto[]> => {
   try {
     const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
     const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
@@ -32,11 +33,38 @@ const getProductos = async (): Promise<Producto[]> => {
     console.error('Error al obtener los productos:', error);
     return [];
   }
+}; */
+
+const getProductos = async (): Promise<Producto[]> => {
+  try {
+    const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
+    const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+    return productosList;
+  } catch (error) {
+    console.error('Error al obtener los productos:', error);
+    throw error; 
+  }
 };
+
+/* const getProductos = async (): Promise<Producto[]> => {
+  try {
+    const productosSnapshot = await getDocs(collection(db, 'productos'));
+    const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
+    return productosList;
+  } catch (error) {
+    console.error('Error al obtener los productos:', error);
+    throw error; 
+  }
+};
+ */
+
 
 const App: React.FC = () => {
   //const [count, setCount] = useState(0)
   const [productos, setProductos] = useState<Producto[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(true);  
+  const [error, setError] = useState<string | null>(null);
 
 
  /*  useEffect(() => {
@@ -50,12 +78,30 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const cargarProductos = async () => {
+      try {
         const productosData = await getProductos();
         setProductos(productosData);
+        setError(null);  
+      } catch (error) {
+        setError('No se pudieron obtener los productos. Intenta nuevamente más tarde.');
+      } finally {
+        setLoading(false);  
+      }
     };
     cargarProductos();
-}, []);
+  }, []);
 
+  if (loading) {
+    return <div>Cargando productos...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (productos.length === 0) {
+    return <div>No hay productos disponibles.</div>;
+  }
 
   return (
   
