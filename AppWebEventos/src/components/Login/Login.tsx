@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { auth } from "../../firebase/firebaseConfig";
 
 
+import "firebase/auth";
+
+
 const Login: React.FC = () => {
 
     const [nombre, setNombre] = useState('');
@@ -17,12 +20,13 @@ const Login: React.FC = () => {
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            await auth.signInWithEmailAndPassword(email, contraseña);
+            await auth.signInWithEmailAndPassword(auth, email, contraseña);
             alert('Inicio de sesión exitoso');
         } catch (error) {
             alert(error.message);
         }
     };
+
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
