@@ -22,8 +22,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+
     /* Añadir tipos de firebase */
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "types": ["firebase"]
+
   },
   "include": ["src"]
 }

@@ -4,12 +4,14 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import { auth } from "../../firebase/firebaseConfig";
 
+
 const Login: React.FC = () => {
 
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [contraseña, setContraseña] = useState('');
 
+    
 
 
     const handleLogin = async (e: FormEvent) => {
