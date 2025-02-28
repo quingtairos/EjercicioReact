@@ -9,6 +9,15 @@ import { collection, getDocs } from 'firebase/firestore';
 
 import { Link } from 'react-router-dom';
 
+interface Producto {
+  id: string;
+  nombre: string;
+  precio: number;
+  //categoria: string;
+  descripcion: string;
+}
+
+
 /* const getProductos = async (): Promise<Producto[]> => {
     try {
       const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
@@ -34,7 +43,10 @@ import { Link } from 'react-router-dom';
 
 const Producto: React.FC = (/* datosProductos: void */) => {
     
+    // [productos, setProductos] = useState<Producto[]>([]);
+
     const [productos, setProductos] = useState<Producto[]>([]);
+
 
     //const [productos, setProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState<string>('');
@@ -68,6 +80,32 @@ const Producto: React.FC = (/* datosProductos: void */) => {
           }
         };
     }, []);*/
+
+    const obtenerProductosDesdeBaseDeDatos = async () => {
+      try {
+        const productosCollection = collection(db, 'productos');
+        const productosSnapshot = await getDocs(productosCollection);
+        const productosList = productosSnapshot.docs.map(doc => ({
+          id: doc.id,
+          nombre: doc.data().nombre,
+          precio: doc.data().precio,
+          categoria: doc.data().categoria
+        })) as unknown as Producto[];
+        return productosList;
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+        return [];
+      }
+    };
+
+    useEffect(() => {
+      const cargarProductos = async () => {
+        const datos = await obtenerProductosDesdeBaseDeDatos();
+        setProductos(datos);
+      };
+      cargarProductos();
+    }, []);
+    
 
     useEffect(() => {
       const fetchProductos = async () => {
