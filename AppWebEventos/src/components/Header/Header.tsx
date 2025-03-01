@@ -35,12 +35,16 @@ const Header: FC = () => {
             <nav>
                 <ul>
                     <li><Link to="/">Inicio</Link></li>
-                    <li><Link to="../Productos/Producto.tsx">Productos/EVENTOS</Link></li>
+                    <li><Link to="../Productos">Productos/EVENTOS</Link></li>
                     <li><Link to="/contacto">Contacto</Link></li>
-                    <li><Link to="../Carrito/Carrito.tsx">Carrito</Link></li>
+                    <li><Link to="../Carrito">Carrito</Link></li>
                     <li><Link to="/sobreNos">Acerca de</Link></li>
-                    <img src="../../assets/img/user-circle.png" alt="PERFIL" />
-                    <li><Link to="../Login/Login.tsx">Iniciar Sesión</Link></li>
+                    <li>
+                        <Link to="/login">
+                            <img src="../../assets/img/user-circle.png" alt="PERFIL" />
+                        </Link>
+                    </li>
+                    <li><Link to="../iniciar-sesion">Iniciar Sesión</Link></li>
                     <li><Link to="../Registro/Registro.tsx">Registrarse</Link></li>
                 </ul>
             </nav>

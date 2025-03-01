@@ -4,7 +4,7 @@ import Inicio from './components/Inicio/Inicio';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-//import { Producto } from './types/Producto';
+import { Producto } from './types/Producto';
 
 import React, { useEffect, useState } from 'react';
 
@@ -16,7 +16,7 @@ import IniciarSesion from './components/Login';
 //import { getProductos } from './components/Productos';
 import Registro from './components/Registro';
 
-import Producto from './components/Productos';
+import Productos from './components/Productos';
 
 import { collection, DocumentData, getDocs } from 'firebase/firestore';
 
@@ -111,7 +111,7 @@ const App: React.FC = () => {
             <div>No hay productos disponibles.</div>;
             <Routes>
               <Route path="/" element={< Inicio />} />
-              <Route path="/productos" element={<Producto />} />
+              <Route path="/productos" element={<Productos />} />
               <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
               <Route path="/carrito" element={<Carrito />} />
               <Route path="/iniciar-sesion" element={<IniciarSesion />} />
