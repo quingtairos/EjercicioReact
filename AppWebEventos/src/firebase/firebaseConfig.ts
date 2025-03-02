@@ -1,6 +1,8 @@
-import { collection, Firestore, getDocs } from 'firebase/firestore';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+
+import { collection, Firestore, getDocs } from 'firebase/firestore';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,4 +34,5 @@ async function getProductos(db: Firestore) {
   return productosList;
 }
 
-export { auth, collection, db, getDocs };
+export { app, auth, collection, db, getDocs };
+

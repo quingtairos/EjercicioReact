@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Producto.css';
 
-import { Producto } from '../../types/Producto';
+//import { Productos } from '../../types/Producto';
 
 import { db } from '../../firebase/firebaseConfig';
 
@@ -13,7 +13,7 @@ interface Producto {
   id: string;
   nombre: string;
   precio: number;
-  //categoria: string;
+  categoria: string;
   descripcion: string;
 }
 

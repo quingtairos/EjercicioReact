@@ -21,6 +21,7 @@ import Productos from './components/Productos';
 import { collection, DocumentData, getDocs } from 'firebase/firestore';
 
 import { QuerySnapshot } from 'firebase/firestore/lite';
+import Eventos from './components/Eventos';
 import { db } from './firebase/firebaseConfig';
 
 /* const getProductos = async (): Promise<Producto[]> => {
@@ -34,7 +35,7 @@ import { db } from './firebase/firebaseConfig';
   }
 }; */
 
-const getProductos = async (): Promise<Producto[]> => {
+const getProductos = async (): Promise<Productos[]> => {
   try {
     const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
     const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
@@ -60,7 +61,7 @@ const getProductos = async (): Promise<Producto[]> => {
 
 const App: React.FC = () => {
   //const [count, setCount] = useState(0)
-  const [productos, setProductos] = useState<Producto[]>([]);
+  const [productos, setProductos] = useState<Productos[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);  
   const [error, setError] = useState<string | null>(null);
@@ -116,6 +117,7 @@ const App: React.FC = () => {
               <Route path="/carrito" element={<Carrito />} />
               <Route path="/iniciar-sesion" element={<IniciarSesion />} />
               <Route path="/registro" element={<Registro />} />
+              <Route path='/eventos' element={<Eventos />} />
             </Routes>
             <Footer />
           </Router>
