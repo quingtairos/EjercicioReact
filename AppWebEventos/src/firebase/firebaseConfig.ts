@@ -1,14 +1,20 @@
+import { getFirestore } from 'firebase/firestore';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import { collection, Firestore, getDocs } from 'firebase/firestore';
+
+import { addDoc, collection, Firestore, getDocs } from 'firebase/firestore';
+
+
+import 'firebase/compat/firestore';
+
+import { getAuth } from 'firebase/auth';
+  
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { getFirestore } from "firebase/firestore";
 
-import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,9 +27,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+/* if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} */
+
 const app = initializeApp(firebaseConfig);
 
-const db/* : Firestore */ = getFirestore(app);
+const db = getFirestore(app);
+
+//const db/* : Firestore */ = getFirestore(app);
 
 /* export */ const auth = getAuth(app);
 
@@ -34,5 +46,5 @@ async function getProductos(db: Firestore) {
   return productosList;
 }
 
-export { app, auth, collection, db, getDocs };
+export { addDoc, app, auth, collection, db, getDocs };
 

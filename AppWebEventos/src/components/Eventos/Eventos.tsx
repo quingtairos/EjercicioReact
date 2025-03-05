@@ -1,5 +1,5 @@
 import { DocumentData, onSnapshot, QuerySnapshot } from 'firebase/firestore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { EventosCollection } from '../../firebase/controller';
 //import { Evento } from '../../types/Evento';
 
@@ -15,7 +15,7 @@ import './Eventos.css';
 //import { FC } from 'react';
 
 function Eventos() {
-    const [Eventos, setEventos] = useState<Evento>([])
+    const [Eventos, setEventos] = useState<Evento[]>([]);
 
     useEffect(() => 
         onSnapshot(EventosCollection, (snapshot: QuerySnapshot<DocumentData>) => {
@@ -28,13 +28,23 @@ function Eventos() {
                 };
                 })
             );
-        })
+        }),
+        []
     );
 
     console.log(Eventos, "Eventos");
         return (
             <div className="card">
                 <h2 className='titulo'>Eventos</h2>
+                (Eventos && Eventos.length ? (
+                    <div>
+                        {
+                            Eventos?.map((Evento) => (
+                                <Information Evento={Evento} />
+                            ))
+                        }
+                    </div>
+                ))
             </div>
         );
 
@@ -43,6 +53,3 @@ function Eventos() {
 
 export default Eventos;
 
-function useState(arg0: never[]): [any, any] {
-    throw new Error('Function not implemented.');
-}

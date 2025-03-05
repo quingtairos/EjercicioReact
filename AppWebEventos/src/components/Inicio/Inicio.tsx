@@ -1,12 +1,56 @@
 import { Link } from 'react-router-dom';
 import './Inicio.css';
 
+import { addDoc, collection, db } from '../../firebase/firebaseConfig';
+
+
+//import 'firebase/firestore';
+import { useEffect } from 'react';
 
 
 //import fest from './assets/img/fest.jpeg';
 
+/* db.collection('Productos').add({
+    categoria: 'fiesta',
+    id: 'nuevoProducto123',
+    nombre: 'Nuevo Producto',
+    precio: 50,
+    descripcion: 'Un producto nuevo para fiestas',
+    imagen: 'https://via.placeholder.com/150'
+  }).then(() => {
+    console.log('Documento añadido correctamente');
+  }).catch((error: any) => {
+    console.error('Error al añadir el documento: ', error);
+  });; */
+  
+
+/*   if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } */
+
+    //const db = firebase.firestore();
 
     const Inicio = () => {
+
+        useEffect(() => {
+            const addProducto = async () => {
+              try {
+                await addDoc(collection(db, 'Productos'), {
+                    categoria: 'fiesta',
+                    id: 'nuevoProducto123',
+                    nombre: 'Nuevo Producto',
+                    precio: 50,
+                    descripcion: 'Un producto nuevo para fiestas',
+                    //imagen: 'https://example.com/nuevo_producto.jpg'
+            });//.then(() => {
+              console.log('Documento añadido correctamente');
+            } catch (error) {
+              console.error('Error al añadir el documento: ', error);
+            }
+          };
+
+            addProducto();
+        }, []);
 
         const productosDestacados = [
             { id: 1, nombre: 'Producto 1', precio: 20.99 },
