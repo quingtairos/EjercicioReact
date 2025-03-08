@@ -1,58 +1,45 @@
 import { DocumentData, onSnapshot, QuerySnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { EventosCollection } from '../../firebase/controller';
-//import { Evento } from '../../types/Evento';
-
-
-// { collection } from 'firebase/firestore';
+import { Evento } from '../../types/Evento';
 import Information from '../Information/Information';
 import './Eventos.css';
 
-
-// Asegúrate de importar tu colección de Firestore aquí
-// import { EventosCollection } from './ruta-a-tu-firestore';
-import { Evento } from '../../types/Evento';
-//import { FC } from 'react';
-
 function Eventos() {
-    const [Eventos, setEventos] = useState<Evento[]>([]);
+    const [eventos, setEventos] = useState<Evento[]>([]);
 
-    useEffect(() => 
-        onSnapshot(EventosCollection, (snapshot: QuerySnapshot<DocumentData>) => {
+    useEffect(() => {
+        const unsubscribe = onSnapshot(EventosCollection, (snapshot: QuerySnapshot<DocumentData>) => {
             setEventos(
-                snapshot.docs.map((doc: any) => {
-                //console.log(doc, "doc");
-                return {
-                    id: doc.id,
-                    ...document.data(),
-                };
+                snapshot.docs.map((doc) => {
+                    return {
+                        id: doc.id,
+                        ...doc.data(), // Aquí usamos doc.data() para obtener los datos correctos
+                    };
                 })
             );
-        }),
-        []
+        });
+
+        // Cleanup function para cuando el componente se desmonte
+        return () => unsubscribe();
+    }, []);
+
+    return (
+        <div className="card">
+            <h2 className="titulo">Eventos</h2>
+            {eventos && eventos.length ? (
+                <div>
+                    {eventos.map((evento) => (
+                        <Information key={evento.id} Eventos={evento} />
+                    ))}
+                </div>
+            ) : (
+                <h2 className="no-Eventos">No hay Eventos</h2>
+            )}
+        </div>
     );
-
-    //console.log(Eventos, "Eventos");
-
-        return (
-            <div className="card">
-                <h2 className='titulo'>Eventos</h2>
-                (Eventos && Eventos.length ? (
-                    <div>
-                        {
-                            Eventos?.map((Eventos) => (
-                                <Information key={Eventos.id} Eventos=
-                                {Eventos} />
-                            ))}
-                    </div>
-                ) : (
-                    <h2 className='no-Eventos'>No hay Eventos</h2>
-                ))
-            </div>
-        );
-
-      
-};
+}
 
 export default Eventos;
+
 

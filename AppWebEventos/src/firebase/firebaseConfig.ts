@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 
 
-import { addDoc, collection, Firestore, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 
 
 import 'firebase/compat/firestore';
@@ -39,12 +39,12 @@ const db = getFirestore(app);
 
 /* export */ const auth = getAuth(app);
 
-async function getProductos(db: Firestore) {
+/* async function getProductos(db: Firestore) {
   const productosCol = collection(db, 'productos');
   const productosSnapshot = await getDocs(productosCol);
   const productosList = productosSnapshot.docs.map(doc => doc.data());
   return productosList;
-}
+} */
 
 export { addDoc, app, auth, collection, db, getDocs };
 
