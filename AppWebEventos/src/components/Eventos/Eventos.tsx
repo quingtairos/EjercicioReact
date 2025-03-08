@@ -40,9 +40,9 @@ function Eventos() {
                 (Eventos && Eventos.length ? (
                     <div>
                         {
-                            Eventos?.map((Evento) => (
-                                <Information key={Evento.id} Eventos=
-                                {Evento} />
+                            Eventos?.map((Eventos) => (
+                                <Information key={Eventos.id} Eventos=
+                                {Eventos} />
                             ))}
                     </div>
                 ) : (
