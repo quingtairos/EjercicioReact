@@ -41,7 +41,7 @@ function Eventos() {
                     <div>
                         {
                             Eventos?.map((Evento) => (
-                                <Information key={Evento.id} Evento=
+                                <Information key={Evento.id} Eventos=
                                 {Evento} />
                             ))}
                     </div>
