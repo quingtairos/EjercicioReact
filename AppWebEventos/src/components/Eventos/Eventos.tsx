@@ -5,13 +5,13 @@ import { EventosCollection } from '../../firebase/controller';
 
 
 // { collection } from 'firebase/firestore';
-import { Evento } from '../../types/Evento';
+import Information from '../Information/Information';
 import './Eventos.css';
 
 
 // Asegúrate de importar tu colección de Firestore aquí
 // import { EventosCollection } from './ruta-a-tu-firestore';
-
+import { Evento } from '../../types/Evento';
 //import { FC } from 'react';
 
 function Eventos() {
@@ -32,7 +32,8 @@ function Eventos() {
         []
     );
 
-    console.log(Eventos, "Eventos");
+    //console.log(Eventos, "Eventos");
+
         return (
             <div className="card">
                 <h2 className='titulo'>Eventos</h2>
@@ -40,15 +41,17 @@ function Eventos() {
                     <div>
                         {
                             Eventos?.map((Evento) => (
-                                <Information Evento={Evento} />
-                            ))
-                        }
+                                <Information key={Evento.id} Evento=
+                                {Evento} />
+                            ))}
                     </div>
+                ) : (
+                    <h2 className='no-Eventos'>No hay Eventos</h2>
                 ))
             </div>
         );
 
-    
+      
 };
 
 export default Eventos;
