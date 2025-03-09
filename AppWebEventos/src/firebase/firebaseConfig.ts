@@ -33,7 +33,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 //const db/* : Firestore */ = getFirestore(app);
 
@@ -46,5 +46,5 @@ const db = getFirestore(app);
   return productosList;
 } */
 
-export { addDoc, app, auth, collection, db, getDocs };
+export { addDoc, app, auth, collection, getDocs };
 

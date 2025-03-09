@@ -3,18 +3,20 @@ import { Evento } from '../../types/Evento';
 import './Information.css';
 
 
-interface IProps {
+interface InformationProps {
     Eventos: Evento;
 }
 
 
-function Information({ Eventos }: IProps)  {
+const Information: React.FC<InformationProps> = ({ Eventos }) => {
         console.log(Eventos, "Eventos");
     return (
        <div className="Evento-preview">
               <h2>{Eventos.nombre}</h2>
               <h3>{Eventos.precio}</h3>
               <p>{Eventos.descripcion}</p>
+              {/*< p>Fecha: {Eventos.fecha}</p>
+            <p>Lugar: {Eventos.lugar}</p> */}
 
               {/* Descripcion */}
                 <div className="descripcion">
