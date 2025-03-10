@@ -1,9 +1,8 @@
-import { getFirestore } from 'firebase/firestore';
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
 
-import { addDoc, collection, getDocs } from 'firebase/firestore';
 
 
 import 'firebase/compat/firestore';
@@ -33,7 +32,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+/* export */ const db = getFirestore(app);
 
 //const db/* : Firestore */ = getFirestore(app);
 
@@ -46,5 +45,7 @@ export const db = getFirestore(app);
   return productosList;
 } */
 
-export { addDoc, app, auth, collection, getDocs };
+export { addDoc, app, auth, collection, db, getDocs };
+
+//export { db };
 

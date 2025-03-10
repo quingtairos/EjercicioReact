@@ -8,19 +8,20 @@ import './Eventos.css';
 function Eventos() {
     const [eventos, setEventos] = useState<Evento[]>([]);
 
+
     useEffect(() => {
         const unsubscribe = onSnapshot(EventosCollection, (snapshot: QuerySnapshot<DocumentData>) => {
             setEventos(
                 snapshot.docs.map((doc) => {
                     return {
                         id: doc.id,
-                        ...doc.data(), // Aquí usamos doc.data() para obtener los datos correctos
+                        ...doc.data(), 
                     };
                 })
             );
         });
 
-        // Cleanup function para cuando el componente se desmonte
+       
         return () => unsubscribe();
     }, []);
 
@@ -30,7 +31,7 @@ function Eventos() {
             {eventos && eventos.length ? (
                 <div>
                     {eventos.map((evento) => (
-                        <Information key={evento.id} Eventos={evento} />
+                        <Information key={evento.id} evento={evento} />
                     ))}
                 </div>
             ) : (

@@ -12,13 +12,13 @@ const ProductoComponent: React.FC = () => {
     useEffect(() => {
         const obtenerProductos = async () => {
             try {
-                const productosCollection = collection(db, 'productos');
+                const productosCollection = collection(db, 'Productos');
                 const productosSnapshot = await getDocs(productosCollection);
                 const productosList = productosSnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
                 })) as Producto[];
-
+                console.log('Productos:', productosList);
                 setProductos(productosList);
             } catch (error) {
                 console.error('Error al obtener productos:', error);
@@ -41,9 +41,9 @@ const ProductoComponent: React.FC = () => {
             ) : (
                 productos.map((producto) => (
                     <div key={producto.id} className="producto">
-                        <h3>{producto.nombre}</h3>
-                        <p>Precio: ${producto.precio}</p>
-                        <p>Descripción: {producto.descripcion}</p>
+                        <h3>{producto.nombre || 'Sin nombre'}</h3>
+                        <p>Precio: ${producto.precio  ? `${producto.precio}€` : 'Precio no disponible'}</p>
+                        <p>Descripción: {producto.descripcion || 'Sin descripción'}</p>
                         <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
                     </div>
                 ))

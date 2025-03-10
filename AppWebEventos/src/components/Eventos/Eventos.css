@@ -1,0 +1,17 @@
+.card {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.titulo {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.no-Eventos {
+    color: red;
+    text-align: center;
+    font-size: 1.5rem;
+}

@@ -35,7 +35,7 @@ import { collection, getFirestore } from 'firebase/firestore';
 // Usamos la instancia ya inicializada
 const db = getFirestore();
 
-export const EventosCollection = collection(db, 'eventos'); // Asegúrate de que 'eventos' sea el nombre correcto de tu colección
+export const EventosCollection = collection(db, 'eventos');
 
 
 // Función para obtener productos desde Firestore
