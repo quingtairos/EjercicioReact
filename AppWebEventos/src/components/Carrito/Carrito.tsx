@@ -45,8 +45,7 @@ function Carrito() {
                     </div>
                 ))}
               </div>
-              <p>precio Total: ${calcularPrecioTotal()}</p>
-            </>
+{/*               <p>precio Total: ${calcularPrecioTotal()}</p> */}            </>
           )}
     </div>
   );

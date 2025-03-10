@@ -3,4 +3,13 @@
     margin: 20px auto;
   }
   
+  .lista-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   
+  .producto-en-carrito {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }

@@ -109,7 +109,7 @@ const App: React.FC = () => {
           {/* <p>Contenido principal de la web.</p> */}
           <Router>
             <Header />
-            <div>No hay productos disponibles.</div>;
+            
             <Routes>
               <Route path="/" element={< Inicio />} />
               <Route path="/productos" element={<Productos />} />

@@ -21,18 +21,22 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
         console.log(`Producto ${producto.nombre} agregado al carrito.`);
     };
 
+    
+
     return (
         <div className="DetallesProducto">
             <h1>DetalleS del producto</h1>
             <h2>{producto.nombre}</h2>
             <p>Precio: ${producto.precio}</p>
             <p>{producto.descripcion}</p>
+
+            
             
            
             <div className="acciones">
-            <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
-            
-            <Link to="/iniciar-sesion">Iniciar Sesión para Comprar</Link>
+                <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
+                
+                <Link to="/iniciar-sesion">Iniciar Sesión para Comprar</Link>
             </div>
         </div>
             
