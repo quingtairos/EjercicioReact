@@ -9,6 +9,9 @@ interface InformationProps {
 
 
 const Information: React.FC<InformationProps> = ({ Eventos }) => {
+    if (!Eventos) {
+        return <p>Cargando...</p>;
+    }
         console.log(Eventos, "Eventos");
     return (
        <div className="Evento-preview">
@@ -24,7 +27,7 @@ const Information: React.FC<InformationProps> = ({ Eventos }) => {
                         <strong>Destacado</strong>
                     </span>
                     <hr />
-                    <span className='featute'>Main Feature: (Eventos?.descripcion)</span>
+                    <span className='featute'>Main Feature: (Eventos.descripcion)</span>
                     <Link to={`/Eventos/${Eventos.id}`}>
                         <button className='moreinfo-btn'>
                         Ver más Information</button>

@@ -5,25 +5,30 @@ import { Evento } from '../../types/Evento';
 import Information from '../Information/Information';
 import './Eventos.css';
 
+
 function Eventos() {
     const [eventos, setEventos] = useState<Evento[]>([]);
 
 
     useEffect(() => {
         const unsubscribe = onSnapshot(EventosCollection, (snapshot: QuerySnapshot<DocumentData>) => {
+            console.log(snapshot.docs.map(doc => doc.data()));
             setEventos(
                 snapshot.docs.map((doc) => {
+                    const data = doc.data();
                     return {
                         id: doc.id,
-                        ...doc.data(), 
+                        nombre: data.nombre || '',
+                        precio: data.precio || 0,
+                        descripcion: data.descripcion || '',
                     };
                 })
             );
         });
-
-       
+    
         return () => unsubscribe();
     }, []);
+    
 
     return (
         <div className="card">
@@ -31,7 +36,7 @@ function Eventos() {
             {eventos && eventos.length ? (
                 <div>
                     {eventos.map((evento) => (
-                        <Information key={evento.id} evento={evento} />
+                        <Information key={evento.id} Eventos={evento} />
                     ))}
                 </div>
             ) : (
