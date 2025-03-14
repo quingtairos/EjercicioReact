@@ -7,6 +7,7 @@ import { collection, db, getDocs } from '../../firebase/firebaseConfig';
 import { Producto } from '../../types/Producto';
 
 
+import festEvento from '../../assets/img/fest.jpeg';
 
 //import 'firebase/firestore';
 
@@ -66,27 +67,31 @@ import { Producto } from '../../types/Producto';
 
         const [productosDestacados, setProductos] = useState<Producto[]>([]);
         const [loading, setLoading] = useState(true);
+       
 
-    useEffect(() => {
-        const obtenerProductos = async () => {
-            try {
-                const productosCollection = collection(db, 'Productos');
-                const productosSnapshot = await getDocs(productosCollection);
-                const productosList = productosSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                })) as Producto[];
-                console.log('Productos:', productosList);
-                setProductos(productosList);
-            } catch (error) {
-                console.error('Error al obtener productos:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        obtenerProductos();
-    }, []);
+        useEffect(() => {
+          const obtenerProductosDestacados = async () => {
+              try {
+                  const productosCollection = collection(db, 'Productos');
+                  const productosSnapshot = await getDocs(productosCollection);
+                  const productosList = productosSnapshot.docs.map((doc) => {
+                      const data = doc.data() as Producto;
+                      return {
+                          id: doc.id,
+                          ...data,  
+                      };
+                  }).filter((producto) => producto.destacado); 
+                  setProductos(productosList);
+              } catch (error) {
+                  console.error('Error al obtener productos:', error);
+              } finally {
+                  setLoading(false);
+              }
+          };
+      
+          obtenerProductosDestacados();
+      }, []);
+      
 
     if (loading) {
         return <div>Cargando productos...</div>;
@@ -120,6 +125,7 @@ import { Producto } from '../../types/Producto';
                                 <h3>{producto.nombre}</h3>
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
+                                
                               
                                 <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
 
@@ -134,7 +140,8 @@ import { Producto } from '../../types/Producto';
                                 Tenemos varios tipos de eventos.
                                 Algunos de los más solicitados son:
                                 <p>
-                                <img src="../../assets/img/fest.jpeg" alt="festivales" />
+                                <img src={festEvento} alt="festivales" />
+
                                 FESTIVALES
                                 <br />
                                 <small>de todo tipo</small>
