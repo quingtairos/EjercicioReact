@@ -41,7 +41,7 @@ const Header: FC = () => {
                     <li><Link to="/sobreNos">Acerca de</Link></li>
                     <li>
                         <Link to="/login">
-                            <img src="../../assets/img/user-circle.png" alt="PERFIL" />
+                            <img src="userIcon" alt="PERFIL" />
                         </Link>
                     </li>
                     <li><Link to="../iniciar-sesion">Iniciar Sesión</Link></li>

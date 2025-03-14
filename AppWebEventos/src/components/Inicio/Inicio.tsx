@@ -2,12 +2,18 @@ import { Link } from 'react-router-dom';
 import './Inicio.css';
 
 
+import React, { useEffect, useState } from 'react';
+import { collection, db, getDocs } from '../../firebase/firebaseConfig';
+import { Producto } from '../../types/Producto';
+
+
 
 //import 'firebase/firestore';
 
 
 //import fest from './assets/img/fest.jpeg';
 
+//AÑADIR UN PRODUCTO A LA BASE DE DATOS
 /* db.collection('Productos').add({
     categoria: 'fiesta',
     id: 'nuevoProducto123',
@@ -28,7 +34,7 @@ import './Inicio.css';
 
     //const db = firebase.firestore();
 
-    const Inicio = () => {
+    const Inicio: React.FC = () => {
 
       /*  useEffect(() => {
             const addProducto = async () => {
@@ -50,15 +56,45 @@ import './Inicio.css';
             addProducto();
         }, []); */
 
-        const productosDestacados = [
+        /* const productosDestacados = [
             { id: 1, nombre: 'Producto 1', precio: 20.99 },
             { id: 2, nombre: 'Producto 2', precio: 15.49 },
             { id: 3, nombre: 'Producto 3', precio: 10.99 },
             { id: 4, nombre: 'Producto 4', precio: 5.49 },
             { id: 5, nombre: 'Producto 5', precio: 25.99 }
-        ];
+        ]; */
+
+        const [productosDestacados, setProductos] = useState<Producto[]>([]);
+        const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const obtenerProductos = async () => {
+            try {
+                const productosCollection = collection(db, 'Productos');
+                const productosSnapshot = await getDocs(productosCollection);
+                const productosList = productosSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                })) as Producto[];
+                console.log('Productos:', productosList);
+                setProductos(productosList);
+            } catch (error) {
+                console.error('Error al obtener productos:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        obtenerProductos();
+    }, []);
+
+    if (loading) {
+        return <div>Cargando productos...</div>;
+    }
 
         return(
+
+            
             <div className="Inicio">
                 <div className='descripcion-tienda'>
                     <h1>Bienvenido a AppWebEventos</h1>
@@ -75,18 +111,22 @@ import './Inicio.css';
                     <div className="productos-destacados">
                         <h2>Productos destacados</h2>
 
-                        <div className="listaproductos">
+                        {productosDestacados.length === 0 ? (
+                          <p>No hay productos disponibles.</p>
+                          ) : (
+                            <div className="listaproductos">
                             {productosDestacados.map((producto) => (
                             <div key={producto.id} className="producto">
                                 <h3>{producto.nombre}</h3>
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
-                               
+                              
                                 <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
 
                             </div>
                             ))}
                         </div>
+                          )}
 
                         <h2>Eventos</h2>
         
