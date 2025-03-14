@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 import './Inicio.css';
 
-import { addDoc, collection, db } from '../../firebase/firebaseConfig';
 
 
 //import 'firebase/firestore';
-import { useEffect } from 'react';
 
 
 //import fest from './assets/img/fest.jpeg';
@@ -32,7 +30,7 @@ import { useEffect } from 'react';
 
     const Inicio = () => {
 
-        useEffect(() => {
+      /*  useEffect(() => {
             const addProducto = async () => {
               try {
                 await addDoc(collection(db, 'Productos'), {
@@ -50,7 +48,7 @@ import { useEffect } from 'react';
           };
 
             addProducto();
-        }, []);
+        }, []); */
 
         const productosDestacados = [
             { id: 1, nombre: 'Producto 1', precio: 20.99 },

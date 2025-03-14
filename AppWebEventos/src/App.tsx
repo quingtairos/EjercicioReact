@@ -24,6 +24,7 @@ import { QuerySnapshot } from 'firebase/firestore/lite';
 import Eventos from './components/Eventos';
 import { db } from './firebase/firebaseConfig';
 
+
 /* const getProductos = async (): Promise<Producto[]> => {
   try {
     const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
@@ -37,14 +38,25 @@ import { db } from './firebase/firebaseConfig';
 
 const getProductos = async (): Promise<Productos[]> => {
   try {
-    const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'productos'));
+    const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'Productos'));
     const productosList: Producto[] = productosSnapshot.docs.map(doc => doc.data() as Producto);
     return productosList;
   } catch (error) {
     console.error('Error al obtener los productos:', error);
     throw error; 
   }
-};
+}; 
+
+/* const getProductos = async (): Promise<Productos[]> => {
+  try {
+    const productosSnapshot: QuerySnapshot<DocumentData> = await getDocs(collection(db, 'Productos'));
+    return productosSnapshot.docs.map(doc => doc.data() as Producto);
+  } catch (error) {
+    console.error('Error al obtener los productos:', error);
+    return [];
+  }
+}; */
+
 
 /* const getProductos = async (): Promise<Producto[]> => {
   try {
@@ -91,7 +103,7 @@ const App: React.FC = () => {
     cargarProductos();
   }, []);
 
-  if (loading) {
+  /* if (loading) {
     return <div>Cargando productos...</div>;
   }
 
@@ -99,7 +111,7 @@ const App: React.FC = () => {
     return <div>{error}</div>;
   }
 
-  if (productos.length === 0) {
+  if (productos.length === 0) { */
     return (
       <div className="App">
       {/*   <header>
@@ -111,7 +123,7 @@ const App: React.FC = () => {
             <Header />
             
             <Routes>
-              <Route path="/" element={< Inicio />} />
+              <Route path="/" element={<Inicio />} />
               <Route path="/productos" element={<Productos />} />
               <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
               <Route path="/carrito" element={<Carrito />} />
@@ -119,6 +131,13 @@ const App: React.FC = () => {
               <Route path="/registro" element={<Registro />} />
               <Route path='/eventos' element={<Eventos />} />
             </Routes>
+
+            {loading && <div>Cargando productos...</div>}
+            {error && <div>{error}</div>}
+            {productos.length === 0 && !loading && !error && (
+              <div>No se han encontrado productos.</div>
+            )}
+
             <Footer />
           </Router>
         {/* </main> */}
@@ -131,7 +150,7 @@ const App: React.FC = () => {
 
       
     );
-  }
+  /*}*/
 
   
 };
