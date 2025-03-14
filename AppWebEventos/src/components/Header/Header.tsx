@@ -45,7 +45,7 @@ const Header: FC = () => {
                         </Link>
                     </li>
                     <li><Link to="../iniciar-sesion">Iniciar Sesión</Link></li>
-                    <li><Link to="../Registro/Registro.tsx">Registrarse</Link></li>
+                    <li><Link to="../Registro">Registrarse</Link></li>
                 </ul>
             </nav>
         </header>

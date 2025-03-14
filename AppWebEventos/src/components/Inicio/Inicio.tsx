@@ -127,7 +127,7 @@ import festEvento from '../../assets/img/fest.jpeg';
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                 
                               
-                                <Link to={`/detalles/${producto.id}`}>Ver detalles</Link>
+                                <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
 
                             </div>
                             ))}
