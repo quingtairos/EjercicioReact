@@ -1,6 +1,10 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import './Registro.css';
 
 import React, { FC, useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase/firebaseConfig';
 
 const Registro: FC = () => {
     const [nombre, setNombre] = useState('');
@@ -10,11 +14,32 @@ const Registro: FC = () => {
     const [apellidos, setApellidos] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
     //const [registrado, setRegistrado] = useState(false);
+    const [error, setError] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const handlleSubmit = (e: React.FormEvent) => {
+    const handlleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       //console.log('Formulario enviado');
 
+      setLoading(true);
+      setError('');
+
+      try {
+        const userCredentiales = await createUserWithEmailAndPassword(auth, email, contraseña);
+
+        console.log('Usuario creado:', userCredentiales.user);
+
+
+
+        navigate('/productos');
+
+      } catch (error: any) {
+        setError(error.message);
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
   /* function setEmail(value: string): void {
@@ -43,6 +68,10 @@ const Registro: FC = () => {
             required
           /> */}
          {/*  <button type="submit">Registrarse</button> */}
+
+          {loading && <p>Cargando...</p>}
+          {error && <p>{error}</p>}
+          
             <div>
                 <label>Nombre:</label>
                 <input type="text" name='nombre' id='nombre' value={nombre} /* required */ onChange={(evento) => setNombre(evento.target.value)} />
