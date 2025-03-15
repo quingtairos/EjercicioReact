@@ -3,8 +3,6 @@ import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 
 
-
-
 import 'firebase/compat/firestore';
 
 import { getAuth } from 'firebase/auth';

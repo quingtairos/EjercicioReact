@@ -1,12 +1,48 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 
+import userIcon from '../../assets/img/user-circle.png';
 
-import { FC } from 'react';
+import { useEffect, useState } from 'react';
+
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase/firebaseConfig';
 
 
-const Header: FC = () => {
-    
+
+const Header: React.FC = () => {
+
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [hasAccount, setHasAccount] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsAuthenticated(true);
+        
+                setHasAccount(true);
+            } else {
+                setIsAuthenticated(false);
+                setHasAccount(false);
+            }
+          });
+      
+            return () => unsubscribe();
+        }, []);
+
+        const handleUserIconClick = () => {
+            if (isAuthenticated) {
+                navigate('/productos');
+            } else {
+                if (hasAccount) {
+                navigate('/iniciar-sesion');
+            } else {
+                navigate('/registro');
+            }
+            }
+        };
+        
     /* return (
         <div className="Header">
             <div className='busqueda'>
@@ -40,12 +76,16 @@ const Header: FC = () => {
                     <li><Link to="../Carrito">Carrito</Link></li>
                     <li><Link to="/sobreNos">Acerca de</Link></li>
                     <li>
-                        <Link to="/login">
-                            <img src="userIcon" alt="PERFIL" />
-                        </Link>
+                        <button onClick={handleUserIconClick}>
+                            <img src={userIcon} alt="PERFIL"  width="30" height="30" />
+                        </button>
                     </li>
-                    <li><Link to="../iniciar-sesion">Iniciar Sesión</Link></li>
-                    <li><Link to="../Registro">Registrarse</Link></li>
+                    {!isAuthenticated && (
+                        <>
+                            <li><Link to="../iniciar-sesion">Iniciar Sesión</Link></li>
+                            <li><Link to="../Registro">Registrarse</Link></li>
+                        </>
+                    )}
                 </ul>
             </nav>
         </header>
