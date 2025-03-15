@@ -1,23 +1,37 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
 import './Login.css';
 
-import { Link } from 'react-router-dom';
-import { auth } from "../../firebase/firebaseConfig";
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
-import "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, User } from 'firebase/auth';
+import { auth } from '../../firebase/firebaseConfig';
+
+
+//import "firebase/auth";
+
+
+const provider = new GoogleAuthProvider();
 
 
 const Login: React.FC = () => {
 
-    const [nombre, setNombre] = useState('');
-    const [email, setEmail] = useState('');
-    const [contraseña, setContraseña] = useState('');
+    const [nombre, setNombre] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [contraseña, setContraseña] = useState<string>('');
+    const [usuario, setUsuario] = useState<User | null>(null);
+    const [error, setError] = useState<string>('');
+    const navigate = useNavigate();
 
-    
+    /* const[formState, setFormState] = useState({
+ 
+        nombre: '',
+        contraseña: '',
+        contraseñausuario: '',
+       }); */
 
 
-    const handleLogin = async (e: FormEvent) => {
+    /* const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         try {
             await auth.signInWithEmailAndPassword(auth, email, contraseña);
@@ -34,38 +48,84 @@ const Login: React.FC = () => {
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         setContraseña(e.target.value);
+    }; */
+
+    const handleSubmit = async (evento: FormEvent<HTMLFormElement>) => {
+        evento.preventDefault();
+        
+        console.log("Nombre:", nombre);
+        console.log("Email:", email);
+        console.log("Contraseña:", contraseña);
+
+        setError('');
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, contraseña);
+            console.log("Usuario autenticado", userCredential.user);
+
+            navigate('/productos');
+        } catch (error: any) {
+            setError(error.message);
+        }
+
     };
+
+    const handleGoogleLogin = async () => {
+        try {
+
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            console.log("usuario con Google: ", user);
+            setUsuario(user);
+
+            navigate('/productos');
+        } catch (error: any) {
+            console.error("Error en la autenticación:", error);
+            setError(error.message);
+        }
+    };
+
+
 
     return (
         <div className='container'>
             <div className="IniciarSesion">
                 <h2>Iniciar Sesión</h2>
 
-                <form onSubmit={handleLogin}>
+                {error && <div className="error-message">{error}</div>}
+
+                <form onSubmit={handleSubmit}>
                     <div>
                         <label>Nombre:</label>
-                        <input type="text" name='nombre' id='nombre' value={nombre} /* required */ onChange={(evento) => setNombre(evento.target.value)} />
+                        <input type="text" name='nombre' id='nombre' value={nombre} /* required */ onChange={(evento: ChangeEvent<HTMLInputElement>) => setNombre(evento.target.value)} />
                     </div>
                     <div>
                         <label>Email:</label>
-                        <input type="email" name='email' value={email} onChange={handleEmailChange} />
+                        <input type="email" name='email' value={email} onChange={/* handleEmailChange */(evento: ChangeEvent<HTMLInputElement>) => setEmail(evento.target.value)} required />
                     </div>
                     <div>
                         <label>Contraseña:</label>
-                        <input type="password" /* name='password' */ value={contraseña} onChange={(handlePasswordChange) => setContraseña(handlePasswordChange.target.value)} />
+                        <input type="password" name='contraseña' value={contraseña} onChange={(evento: ChangeEvent<HTMLInputElement>)/* (handlePasswordChange) */ => setContraseña(/* handlePasswordChange */evento.target.value)} required />
                     </div>
+
                         <button type="submit">Iniciar Sesión</button>
-                        <Link to="../Registro">Registrate aquí</Link>
+
+                        <NavLink to="../Registro">¿No tienes cuenta? Registrate aquí</NavLink>
                         
-                        <button className='google'>
+                        {/* <button onClick={SIGN_IN_WITH_GOOGLE} className='google'>
                             Iniciar Sesión con Google
-                        </button>
+                        </button> */}
                 </form>
+
+                <div>
+                    <button onClick={/* SIGN_IN_WITH_GOOGLE */handleGoogleLogin} className='google'>
+                        Iniciar Sesión con Google
+                    </button>
+                </div>
             
             </div>
         </div>
         );
 
-}
+};
 
 export default Login;
