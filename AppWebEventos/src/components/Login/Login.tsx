@@ -58,6 +58,12 @@ const Login: React.FC = () => {
         console.log("Contraseña:", contraseña);
 
         setError('');
+
+        if (!email || !contraseña) {
+            setError('Debes ingresar un correo y/o una contraseña válidos');
+            return;
+        }
+
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, contraseña);
             console.log("Usuario autenticado", userCredential.user);
