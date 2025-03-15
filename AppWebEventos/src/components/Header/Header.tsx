@@ -33,7 +33,7 @@ const Header: React.FC = () => {
 
         const handleUserIconClick = () => {
             if (isAuthenticated) {
-                navigate('/productos');
+                navigate('/iniciar-sesion');
             } else {
                 if (hasAccount) {
                 navigate('/iniciar-sesion');

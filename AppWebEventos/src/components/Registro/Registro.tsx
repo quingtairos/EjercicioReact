@@ -71,7 +71,7 @@ const Registro: FC = () => {
 
           {loading && <p>Cargando...</p>}
           {error && <p>{error}</p>}
-          
+
             <div>
                 <label>Nombre:</label>
                 <input type="text" name='nombre' id='nombre' value={nombre} /* required */ onChange={(evento) => setNombre(evento.target.value)} />
@@ -96,7 +96,8 @@ const Registro: FC = () => {
                 <label>Fecha Nacimiento:</label>
                 <input type="date" name='fechaNacimiento' value={fechaNacimiento} onChange={(evento) => setFechaNacimiento(evento.target.value)} />
             </div>
-            <button type="submit">Registrarse</button>
+            
+            <button type="submit" disabled={loading}>{loading ? 'Registrando...' : 'Registrarse'}</button>
                 {/* <a href="../Registro/Registro.jsx">Registrate aquí</a> */}
             
         </form>
