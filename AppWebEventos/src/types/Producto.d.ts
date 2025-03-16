@@ -11,6 +11,7 @@ export interface Producto {
 } */
 
 export interface Producto {
+    categoria: any;
     id: string;
     nombre: string;
     descripcion: string;

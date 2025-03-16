@@ -40,15 +40,15 @@ const ProductoComponent: React.FC = () => {
                 <p>No hay productos disponibles.</p>
             ) : (
                 productos.map((producto) => (
-                    <div className="card" style={{ width: '18rem' }}>
-                        <div key={producto.id} className="producto">
+                    <div key={producto.id} className="card" style={{ width: '18rem' }}>
+                        <div className="producto">
                             <div className="card-body">
                                 <h5 className="card-title">{producto.nombre || 'Sin nombre'}</h5>
                                 <p className="card-text">Precio: ${producto.precio  ? `${producto.precio}€` : 'Precio no disponible'}</p>
                                 <p className="card-text">Descripción: {producto.descripcion || 'Sin descripción'}</p>
                             </div>
                             <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
-                            
+
                         </div>
                     </div>
                 ))

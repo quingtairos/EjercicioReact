@@ -5,10 +5,18 @@ import './DetalleProducto.css';
 import { db } from '../../firebase/firebaseConfig';
 
 import { doc, getDoc } from 'firebase/firestore';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
+import { useAuth } from '../../hooks/useAuth.ts';
 
 const DetalleProducto: React.FC = ( /* { match } */) => {
     const { id } = useParams<{ id: string }>();
+
+    const { isAuthenticated, user } = useAuth();
+
+    const [producto, setProducto] = useState<Producto | null>(null);
+
+    const navigate = useNavigate();
     
     /* const producto: Producto = {
         id: id,//1,
@@ -18,8 +26,6 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
         /* imagen: 'https://picsum.photos/200/300',*/
 //  }; */
 
-    const [producto, setProducto] = useState<Producto | null>(null);
-
     useEffect(() => {
         const obtenerProducto = async () => {
           if (id) {
@@ -28,7 +34,7 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
               const docSnap = await getDoc(docRef);
     
               if (docSnap.exists()) {
-                setProducto(docSnap.data());
+                setProducto(docSnap.data() as Producto);
               } else {
                 console.log('No se encontró el producto');
               }
@@ -43,9 +49,14 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
 
       
 
-    const agregarAlCarrito: React.MouseEventHandler<HTMLButtonElement> = (/* event */) => {
-        
-        console.log(`Producto ${producto.nombre} agregado al carrito.`);
+    //const agregarAlCarrito: React.MouseEventHandler<HTMLButtonElement> = (/* event */) => {
+    const agregarAlCarrito = () => {   
+/* console.log(`Producto ${producto.nombre} agregado al carrito.`);*/
+        if (!isAuthenticated) {
+            navigate('/iniciar-sesion');
+        } else {
+            console.log(`Producto ${producto?.nombre} agregado al carrito.`);
+        }
     };
 
     if (!producto) {
@@ -57,13 +68,20 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
             <h1>DetalleS del producto</h1>
             <h2>{producto.nombre}</h2>
             {/* <img src={producto.imagen} alt={producto.nombre} /> */}
-            <p>Precio: ${producto.precio}</p>
-            <p>{producto.descripcion}</p> 
+            {producto.imagen && <img src={producto.imagen} alt={producto.nombre} />}
+            <p><strong>Precio: </strong>${producto.precio}</p>
+            <p><strong>Descripcion: </strong>{producto.descripcion}</p> 
+            {producto.categoria && <p><strong>Categoría:</strong> {producto.categoria}</p>}
            
             <div className="acciones">
-                <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
-                
-                <Link to="/iniciar-sesion">Iniciar Sesión para Comprar</Link>
+                {isAuthenticated ? (
+                    <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
+                ) : (
+                    <div>
+                        <Link to="/iniciar-sesion" className='btn btn-primary' >Iniciar Sesión para Comprar</Link>
+                    </div>
+                    
+                )}                
             </div>
         </div>
             
