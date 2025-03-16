@@ -111,6 +111,15 @@ import festEvento from '../../assets/img/fest.jpeg';
                             Además aquí encontrarás todo lo que necesitas para organizar tus eventos especiales.
                             ¡Descubre nuestra selección de productos y haz que tus celebraciones sean inolvidables!
                         </p>
+
+                        <h3>Contacto:</h3>
+
+                        <p>Teléfono: +34 692 456 789</p>
+
+                        <p>Redes Sociales: 
+                            <a href="https://www.facebook.com">Facebook</a> | 
+                            <a href="https://www.instagram.com">Instagram</a>
+                        </p>
                 </div>
 
                     <div className="productos-destacados">
@@ -126,7 +135,6 @@ import festEvento from '../../assets/img/fest.jpeg';
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                 
-                              
                                 <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
 
                             </div>
@@ -157,9 +165,14 @@ import festEvento from '../../assets/img/fest.jpeg';
                                 </div>
 
                                             <p>Si quieres ver los productos destacados, haz click en el botón "Productos destacados".</p>
-                                            <p>Si quieres ver los productos más vendidos, haz click en el botón "Productos más vendidos".</p>
-                                            <p>Si quieres ver los productos más buscados, haz click en el botón "Productos más buscados".</p> 
-
+                                            <p>
+                                              Si quieres ver los productos más vendidos, haz click en el botón "Productos más vendidos".
+{/*                                               <Link to="/productos/mas-vendidos" className="btn btn-primary">Productos más vendidos</Link>
+ */}                                        </p>
+                                            <p>
+                                              Si quieres ver los productos más buscados, haz click en el botón "Productos más buscados". 
+{/*                                               <Link to="/productos/mas-buscados" className="btn btn-primary">Productos más buscados</Link>
+ */}                                         </p>
                                         </div>
 
                                         <div className="store-map">

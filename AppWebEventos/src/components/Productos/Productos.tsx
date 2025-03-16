@@ -40,14 +40,27 @@ const ProductoComponent: React.FC = () => {
                 <p>No hay productos disponibles.</p>
             ) : (
                 productos.map((producto) => (
-                    <div key={producto.id} className="producto">
-                        <h3>{producto.nombre || 'Sin nombre'}</h3>
-                        <p>Precio: ${producto.precio  ? `${producto.precio}€` : 'Precio no disponible'}</p>
-                        <p>Descripción: {producto.descripcion || 'Sin descripción'}</p>
-                        <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+                    <div className="card" style={{ width: '18rem' }}>
+                        <div key={producto.id} className="producto">
+                            <div className="card-body">
+                                <h5 className="card-title">{producto.nombre || 'Sin nombre'}</h5>
+                                <p className="card-text">Precio: ${producto.precio  ? `${producto.precio}€` : 'Precio no disponible'}</p>
+                                <p className="card-text">Descripción: {producto.descripcion || 'Sin descripción'}</p>
+                            </div>
+                            <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+                            
+                        </div>
                     </div>
                 ))
             )}
+            {/* <div className="card" style={{ width: '18rem' }}>
+                <img src="path-to-image.jpg" className="card-img-top" alt="Product" />
+                <div className="card-body">
+                    <h5 className="card-title">Product Name</h5>
+                    <p className="card-text">Description of the product.</p>
+                    <a href="#" className="btn btn-primary">Add to Cart</a>
+                </div>
+            </div> */}
         </div>
     );
 };
