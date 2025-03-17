@@ -60,11 +60,19 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
               const carritoRef = doc(db, 'carrito', user?.uid || '')
               const docSnap = await getDoc(carritoRef);
 
-              console.log(`Producto ${producto?.nombre} agregado al carrito.`);
+              if (docSnap.exists()) {
+                const carritoData = docSnap.data();
+                const productosActualizados = [...carritoData.productos, producto];
+                await carritoRef.update({ productos: productosActualizados });
+              } else {
+                await carritoRef.set({ productos: [producto] });
+              }
 
-            } 
-          } catch (error) {
-            console.error('Error al agregar el producto al carrito: ', error);
+              console.log(`Producto ${producto.nombre} agregado al carrito.`);
+
+            }  catch (error) {
+              console.error('Error al agregar el producto al carrito: ', error);
+            }
           }
             //console.log(`Producto ${producto?.nombre} agregado al carrito.`);
         }
