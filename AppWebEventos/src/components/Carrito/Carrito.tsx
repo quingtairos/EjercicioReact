@@ -86,7 +86,32 @@ const Carrito: React.FC = () => {
           setShowModal(true);
         };
 
-         
+          /* const confirmarBorrado = () => {
+            if (eliminarProducto) {
+              const actualizarCarrito = Carrito.filter((p) p.id !== productoEliminado.id);
+              db.collection('carrito').doc(auth.currentUser?.uid).actualizar({
+                productos: actualizarCarrito,
+              })
+              .then(() => {
+                setCarrito(actualizarCarrito);
+                setShowModal(false);
+              });
+            }
+          }; */
+
+          const confirmarBorrado = () => {
+            if (eliminarProducto) {
+              const actualizarCarrito = productosEnCarrito.filter((producto) => producto.id !== eliminarProducto.id);
+              /*db.collection('carrito').doc(auth.currentUser?.uid).actualizar({
+                productos: actualizarCarrito,
+              })
+
+              .then(() => {*/
+                setProductosEnCarrito(actualizarCarrito);
+                setShowModal(false);
+              /* }); */
+            }
+          };
 
           const obtenerPrecioTotal = () => {
             return productosEnCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0).toFixed(2);
