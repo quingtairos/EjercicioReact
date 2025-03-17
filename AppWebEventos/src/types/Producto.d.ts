@@ -11,6 +11,7 @@ export interface Producto {
 } */
 
 export interface Producto {
+    cantidad: number;
     categoria: any;
     id: string;
     nombre: string;

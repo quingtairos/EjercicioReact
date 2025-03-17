@@ -115,10 +115,11 @@ import { db } from './firebase/firebaseConfig';
                <Route path="/" element={<Inicio />} />
                <Route path="/productos" element={<Productos />} />
                <Route path="/producto/:id" element={<DetalleProducto /* match={undefined} */ />} />
-               <Route path="/carrito" element={<Carrito />} />
+               <Route path="/carrito" /* render={() => (auth.currentUser ? <Carrito /> : <Redirect to="/iniciar-sesion" />)} */ element={<Carrito />} />
                <Route path="/iniciar-sesion" element={<IniciarSesion />} />
                <Route path="/registro" element={<Registro />} />
                <Route path='/eventos' element={<Eventos />} />
+               {/* <Redirect from="/" to="/carrito" /> */}
              </Routes>
              <Footer />
            </Router>

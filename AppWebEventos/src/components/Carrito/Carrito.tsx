@@ -1,55 +1,163 @@
 import './Carrito.css';
 
-function Carrito() {
+import React, { useEffect, useState } from 'react';
+
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase/firebaseConfig';
+import { Producto } from '../../types/Producto';
+
+
+
+const Carrito: React.FC = () => {
     
-        const productosEnCarrito = [
-            { id: 1, nombre: 'Producto 1', precio: 20.99 },
+        const [productosEnCarrito, setProductosEnCarrito] = useState<Producto[]>([
+            /* { id: 1, nombre: 'Producto 1', precio: 20.99 },
             { id: 2, nombre: 'Producto 2', precio: 15.49 },
             { id: 3, nombre: 'Producto 3', precio: 10.99 },
             { id: 4, nombre: 'Producto 4', precio: 5.49 },
-            { id: 5, nombre: 'Producto 5', precio: 25.99 }
-        ];
-    
-        const eliminarDelCarrito = (id: number) => {
-            
-            console.log(`Producto con ID ${id} eliminado del carrito.`);
+            { id: 5, nombre: 'Producto 5', precio: 25.99 } */
+        ]);
+
+        const [showModal, setShowModal] = useState(false);
+
+        const [eliminarProducto, setEliminarProducto] = useState<Producto | null>(null);
+
+       /*  const [cargando, setCargando] = useState<boolean>(true); */
+
+       const [cargando, setCargando] = useState(true);
+
+
+        //const navigate = useNavigate();
+
+
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        
+       /*  useEffect(() => {
+          const unsubscribe = auth.onAuthStateChanged(user => {
+            if (!user) {
+              navigate('/iniciar-sesion');
+            } else {
+              fetchCarrito(user.uid);
+            }
+          });
+
+
+          return () => unsubscribe();
+        }); */
+
+
+        useEffect(() => {
+          if (user) {
+            const obtenerCarrito = async () => {
+              try {
+                const carritoRef = doc(db, 'carrito', user.uid);
+                const docSnap = await getDoc(carritoRef);
+                if (docSnap.exists()) {
+                  setProductosEnCarrito(docSnap.data().productos || []);
+                } else {
+                  console.log('No se encontraron productos en el carrito');
+                }
+              } catch (error) {
+                console.error('Error al obtener los productos del carrito: ', error);
+              } finally {
+                setCargando(false);
+              }
+            };
+      
+            obtenerCarrito();
+          }
+        }, [user]);
+
+
+        /* const fetchCarrito = (userId: string) => {
+          db.collection('carrito').doc(userId).get().then((doc) => {
+            if (doc.exists) {
+              setProductosEnCarrito([]);
+            }
+            setCargando(false);
+          });
+        }; */
+
+        const eliminarProductoCarrito = (producto: Producto) => {
+          setEliminarProducto(producto);
+          setShowModal(true);
         };
-    
-  function calcularPrecioTotal(): import("react").ReactNode {
-    throw new Error('Function not implemented.');
-  }
+
+         
+
+          const obtenerPrecioTotal = () => {
+            return productosEnCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0).toFixed(2);
+          };
+
+          if (cargando) {
+            return  <div>Cargando...</div>;
+          }
 
         return (
-            <div className="carrito">
+            <div className="carrito container mt-4">
                 <h2>Carrito</h2>
-                <ul>
+                {/* <ul>
                     <li>Producto 1</li>
                     <li>Producto 2</li>
                     <li>Producto 3</li>
                     <li>Producto 4</li>
                     <li>Producto 5</li>
                 </ul>
-                <p>Total: $80</p>
+                <p>Total: $80</p> */}
 
                 {productosEnCarrito.length === 0 ? (
-        <p>El carrito está vacío.</p>
-          ) : (
-            <>
-              <div className="lista-productos">
-                {productosEnCarrito.map((producto) => (
-                  <div key={producto.id} className="producto-en-carrito">
-                    <h3>{producto.nombre}</h3>
-                    <p>Precio: ${producto.precio}</p>
-                    
-                      <button onClick={() => eliminarDelCarrito(producto.id)}>Eliminar</button>
-                    </div>
-                ))}
-              </div>
-{/*               <p>precio Total: ${calcularPrecioTotal()}</p> */}            </>
-          )}
+                  <p>El carrito está vacío.</p>
+                    ) : (
+                      <>
+                          <div className="lista-productos row">
+                            {productosEnCarrito.map((producto) => (
+                              <div key={producto.id} className="producto-en-carrito  col-md-4 mb-4">
+                                <div className="card">
+                                  <div className="card-body">
+                                    <h5 className="card-title">{producto.nombre}</h5>
+                                <h3>{producto.nombre}</h3>
+                                <p className='card-text'>Precio: ${producto.precio}</p>
+                                
+                                <div className='form-group'>
+                                  <label>Cantidad: </label>
+                                  <input type="number" value={producto.cantidad} min="1" onChange={(e) => handleCambiarCantidad(producto.id, parseInt(e.target.value))} />
+                                </div>
+
+                                  <button className='btn btn-danger' onClick={() => eliminarProductoCarrito(producto/* .id */)}>Eliminar</button>
+                                </div>
+                              </div>
+                            </div>
+                            ))}
+                          </div>
+                        
+          {/*               <p>precio Total: ${calcularPrecioTotal()}</p> */}
+                            <h4>Precio Total: ${obtenerPrecioTotal()}</h4>
+                      </>
+                    )}
+          
+
+            {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmar eliminación</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Body>¿Estás seguro de que deseas eliminar este producto del carrito?</Modal.Body>
+
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                  Cancelar
+                </Button>
+                <Button variant="danger" onClick={confirmarBorrado}>
+                  Eliminar
+                </Button>
+              </Modal.Footer>
+            </Modal> */}
     </div>
+    
   );
-        
 
 }
 
