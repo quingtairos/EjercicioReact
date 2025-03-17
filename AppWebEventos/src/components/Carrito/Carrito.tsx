@@ -19,7 +19,7 @@ const Carrito: React.FC = () => {
             { id: 5, nombre: 'Producto 5', precio: 25.99 } */
         ]);
 
-        const [showModal, setShowModal] = useState(false);
+        const [mostrarModal, setMostrarModal] = useState(false);
 
         const [eliminarProducto, setEliminarProducto] = useState<Producto | null>(null);
 
@@ -32,7 +32,7 @@ const Carrito: React.FC = () => {
 
 
         const auth = getAuth();
-        const user = auth.currentUser;
+        const usuario = auth.currentUser;
 
         
        /*  useEffect(() => {
@@ -50,10 +50,10 @@ const Carrito: React.FC = () => {
 
 
         useEffect(() => {
-          if (user) {
+          if (usuario) {
             const obtenerCarrito = async () => {
               try {
-                const carritoRef = doc(db, 'carrito', user.uid);
+                const carritoRef = doc(db, 'carrito', usuario.uid);
                 const docSnap = await getDoc(carritoRef);
                 if (docSnap.exists()) {
                   setProductosEnCarrito(docSnap.data().productos || []);
@@ -69,7 +69,7 @@ const Carrito: React.FC = () => {
       
             obtenerCarrito();
           }
-        }, [user]);
+        }, [usuario]);
 
 
         /* const fetchCarrito = (userId: string) => {
@@ -83,7 +83,7 @@ const Carrito: React.FC = () => {
 
         const eliminarProductoCarrito = (producto: Producto) => {
           setEliminarProducto(producto);
-          setShowModal(true);
+          setMostrarModal(true);
         };
 
           /* const confirmarBorrado = () => {
@@ -100,9 +100,9 @@ const Carrito: React.FC = () => {
           }; */
 
           const confirmarBorrado = async () => {
-            if (eliminarProducto && user) {
+            if (eliminarProducto && usuario) {
               try {
-                const carritoRef = doc(db, 'carrito', user.uid);
+                const carritoRef = doc(db, 'carrito', usuario.uid);
                 const actualizarCarrito = productosEnCarrito.filter((producto) => producto.id !== eliminarProducto.id);
                 await updateDoc(carritoRef, {
                   productos: actualizarCarrito
@@ -118,7 +118,7 @@ const Carrito: React.FC = () => {
 
               .then(() => {*/
                 //setProductosEnCarrito(actualizarCarrito);
-                setShowModal(false);
+                setMostrarModal(false);
               /* }); */
             }
           };
@@ -132,8 +132,8 @@ const Carrito: React.FC = () => {
               productos: actualizarCarrito,
             }).then(() => { */
               setProductosEnCarrito(actualizarCarrito);
-            /*});*/
           };
+
 
           const obtenerPrecioTotal = () => {
             return productosEnCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0).toFixed(2);
@@ -165,12 +165,12 @@ const Carrito: React.FC = () => {
                                 <div className="card">
                                   <div className="card-body">
                                     <h5 className="card-title">{producto.nombre}</h5>
-                                <h3>{producto.nombre}</h3>
+                                {/* <h3>{producto.nombre}</h3> */}
                                 <p className='card-text'>Precio: ${producto.precio}</p>
                                 
                                 <div className='form-group'>
                                   <label>Cantidad: </label>
-                                  <input type="number" value={producto.cantidad} min="1" onChange={(e) => handleCambiarCantidad(producto.id, parseInt(e.target.value))} />
+                                  <input type="number" className='form-control' value={producto.cantidad} min="1" onChange={(e) => handleCambiarCantidad(producto.id, parseInt(e.target.value))} />
                                 </div>
 
                                   <button className='btn btn-danger' onClick={() => eliminarProductoCarrito(producto/* .id */)}>Eliminar</button>
@@ -186,7 +186,7 @@ const Carrito: React.FC = () => {
                     )}
           
 
-            {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
+            {/* <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
               <Modal.Header closeButton>
                 <Modal.Title>Confirmar eliminación</Modal.Title>
               </Modal.Header>
@@ -194,7 +194,7 @@ const Carrito: React.FC = () => {
               <Modal.Body>¿Estás seguro de que deseas eliminar este producto del carrito?</Modal.Body>
 
               <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                <Button variant="secondary" onClick={() => setsetMostrarModal(false)}>
                   Cancelar
                 </Button>
                 <Button variant="danger" onClick={confirmarBorrado}>

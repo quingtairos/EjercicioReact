@@ -4,7 +4,7 @@ import './DetalleProducto.css';
 
 import { db } from '../../firebase/firebaseConfig';
 
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/useAuth.ts';
@@ -55,17 +55,18 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
         if (!isAuthenticated) {
             navigate('/iniciar-sesion');
         } else {
-          if (producto) {
+          if (producto && user) {
+            //console.log(`${producto.nombre} agregado al carrito.`);
             try {
-              const carritoRef = doc(db, 'carrito', user?.uid || '')
+              const carritoRef = doc(db, 'carrito', user.uid || '')
               const docSnap = await getDoc(carritoRef);
 
               if (docSnap.exists()) {
                 const carritoData = docSnap.data();
                 const productosActualizados = [...carritoData.productos, producto];
-                await carritoRef.update({ productos: productosActualizados });
+                await updateDoc(carritoRef, { productos: productosActualizados });
               } else {
-                await carritoRef.set({ productos: [producto] });
+                await updateDoc(carritoRef, { productos: [producto] });
               }
 
               console.log(`Producto ${producto.nombre} agregado al carrito.`);
@@ -84,7 +85,7 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
 
     return (
         <div className="DetallesProducto">
-            <h1>DetalleS del producto</h1>
+            <h1>Detalles del producto</h1>
             <h2>{producto.nombre}</h2>
             {/* <img src={producto.imagen} alt={producto.nombre} /> */}
             {producto.imagen && <img src={producto.imagen} alt={producto.nombre} />}
