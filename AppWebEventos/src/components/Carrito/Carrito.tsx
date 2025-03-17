@@ -3,7 +3,7 @@ import './Carrito.css';
 import React, { useEffect, useState } from 'react';
 
 import { getAuth } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebaseConfig';
 import { Producto } from '../../types/Producto';
 
@@ -99,21 +99,31 @@ const Carrito: React.FC = () => {
             }
           }; */
 
-          const confirmarBorrado = () => {
-            if (eliminarProducto) {
-              const actualizarCarrito = productosEnCarrito.filter((producto) => producto.id !== eliminarProducto.id);
+          const confirmarBorrado = async () => {
+            if (eliminarProducto && user) {
+              try {
+                const carritoRef = doc(db, 'carrito', user.uid);
+                const actualizarCarrito = productosEnCarrito.filter((producto) => producto.id !== eliminarProducto.id);
+                await updateDoc(carritoRef, {
+                  productos: actualizarCarrito
+                });
+                setProductosEnCarrito(actualizarCarrito);
+              } catch (error) {
+                console.error('Error al eliminar el producto del carrito: ', error);
+              }
+              //const actualizarCarrito = productosEnCarrito.filter((producto) => producto.id !== eliminarProducto.id);
               /*db.collection('carrito').doc(auth.currentUser?.uid).actualizar({
                 productos: actualizarCarrito,
               })
 
               .then(() => {*/
-                setProductosEnCarrito(actualizarCarrito);
+                //setProductosEnCarrito(actualizarCarrito);
                 setShowModal(false);
               /* }); */
             }
           };
 
-          const handleCambiarCantidad = (id: string, newCantidad: number) => {
+          const handleCambiarCantidad = async (id: string, newCantidad: number) => {
             const actualizarCarrito = productosEnCarrito.map((producto) =>
               producto.id === id ? { ...producto, cantidad: newCantidad } : producto
             );
