@@ -50,12 +50,23 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
       
 
     //const agregarAlCarrito: React.MouseEventHandler<HTMLButtonElement> = (/* event */) => {
-    const agregarAlCarrito = () => {   
+    const agregarAlCarrito = async () => {   
 /* console.log(`Producto ${producto.nombre} agregado al carrito.`);*/
         if (!isAuthenticated) {
             navigate('/iniciar-sesion');
         } else {
-            console.log(`Producto ${producto?.nombre} agregado al carrito.`);
+          if (producto) {
+            try {
+              const carritoRef = doc(db, 'carrito', user?.uid || '')
+              const docSnap = await getDoc(carritoRef);
+
+              console.log(`Producto ${producto?.nombre} agregado al carrito.`);
+
+            } 
+          } catch (error) {
+            console.error('Error al agregar el producto al carrito: ', error);
+          }
+            //console.log(`Producto ${producto?.nombre} agregado al carrito.`);
         }
     };
 
