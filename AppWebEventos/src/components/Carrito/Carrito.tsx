@@ -113,6 +113,18 @@ const Carrito: React.FC = () => {
             }
           };
 
+          const handleCambiarCantidad = (id: string, newCantidad: number) => {
+            const actualizarCarrito = productosEnCarrito.map((producto) =>
+              producto.id === id ? { ...producto, cantidad: newCantidad } : producto
+            );
+
+            /* db.collection('carrito').doc(auth.currentUser?.uid).actualizar({
+              productos: actualizarCarrito,
+            }).then(() => { */
+              setProductosEnCarrito(actualizarCarrito);
+            /*});*/
+          };
+
           const obtenerPrecioTotal = () => {
             return productosEnCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0).toFixed(2);
           };
