@@ -132,7 +132,7 @@ const Carrito: React.FC = () => {
           //manejamos el cambio de cantidad
           const handleCambiarCantidad = async (id: string, newCantidad: number) => {
             if (usuario) {
-              try{
+              try {
                 const carritoRef = doc(db, 'carrito', usuario.uid || '');
                 const actualizarCarrito = productosEnCarrito.map((producto) => producto.id === id ? {...producto, cantidad: newCantidad } : producto);
 

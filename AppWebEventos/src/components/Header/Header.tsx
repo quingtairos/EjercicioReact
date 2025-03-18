@@ -14,6 +14,7 @@ const Header: React.FC = () => {
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [hasAccount, setHasAccount] = useState<boolean>(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,6 +43,9 @@ const Header: React.FC = () => {
             }
             }
         };
+
+        const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
         
     /* return (
         <div className="Header">
@@ -69,12 +73,10 @@ const Header: React.FC = () => {
     return (
         <header className='text-light'>
             <nav>
-                <ul>
+                <ul className={isMenuOpen ? 'open' : ''}>
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="../Productos">Productos/EVENTOS</Link></li>
-                    <li><Link to="/contacto">Contacto</Link></li>
                     <li><Link to="../Carrito">Carrito</Link></li>
-                    <li><Link to="/sobreNos">Acerca de</Link></li>
                     <li>
                         <button onClick={handleUserIconClick}>
                             <img src={userIcon} alt="PERFIL"  width="30" height="30" />
@@ -87,6 +89,9 @@ const Header: React.FC = () => {
                         </>
                     )}
                 </ul>
+                <button className="menu-toggle" onClick={toggleMenu}>
+                    ☰
+                </button>
             </nav>
         </header>
     );

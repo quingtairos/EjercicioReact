@@ -49,5 +49,71 @@ main{
 }
 
 img {
-  width: 50%;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+@media (max-width: 480px) {
+  button {
+    font-size: 0.9em;
+    padding: 0.5em 1em;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  /* .logo {
+    height: 4em;
+  } */
+
+  .card {
+    padding: 1.5em;
+    margin: 10px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .logo {
+    height: 3em;
+  }
+
+  .card {
+    padding: 1em;
+    margin: 8px;
+  }
+
+  img {
+    max-width: 90%;
+  }
+
+  main {
+    margin: 20px;
+  }
 }
