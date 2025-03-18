@@ -125,15 +125,29 @@ const Carrito: React.FC = () => {
             }
           };
 
+          //manejamos el cambio de cantidad
           const handleCambiarCantidad = async (id: string, newCantidad: number) => {
-            const actualizarCarrito = productosEnCarrito.map((producto) =>
-              producto.id === id ? { ...producto, cantidad: newCantidad } : producto
-            );
+            if (usuario) {
+              try{
+                const carritoRef = doc(db, 'carrito', usuario.uid || '');
+                const actualizarCarrito = productosEnCarrito.map((producto) => producto.id === id ? {...producto, newCantidad } : producto);
+
+                await updateDoc(carritoRef, {
+                  productos: actualizarCarrito
+                });
+
+                setProductosEnCarrito(actualizarCarrito);
+              } catch (error) {
+                console.error('Error al actualizar la cantidad del producto');
+              }
+            }
+
+           
 
             /* db.collection('carrito').doc(auth.currentUser?.uid).actualizar({
               productos: actualizarCarrito,
             }).then(() => { */
-              setProductosEnCarrito(actualizarCarrito);
+              //setProductosEnCarrito(actualizarCarrito);
           };
 
 
