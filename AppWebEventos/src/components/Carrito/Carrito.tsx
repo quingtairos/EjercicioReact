@@ -7,6 +7,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebaseConfig';
 import { Producto } from '../../types/Producto';
 
+import { useNavigate } from 'react-router-dom';
 
 
 const Carrito: React.FC = () => {
@@ -28,7 +29,7 @@ const Carrito: React.FC = () => {
        const [cargando, setCargando] = useState(true);
 
 
-        //const navigate = useNavigate();
+        const navigate = useNavigate();
 
 
         const auth = getAuth();
@@ -130,7 +131,7 @@ const Carrito: React.FC = () => {
             if (usuario) {
               try{
                 const carritoRef = doc(db, 'carrito', usuario.uid || '');
-                const actualizarCarrito = productosEnCarrito.map((producto) => producto.id === id ? {...producto, newCantidad } : producto);
+                const actualizarCarrito = productosEnCarrito.map((producto) => producto.id === id ? {...producto, cantidad: newCantidad } : producto);
 
                 await updateDoc(carritoRef, {
                   productos: actualizarCarrito
@@ -152,7 +153,7 @@ const Carrito: React.FC = () => {
 
 
           const obtenerPrecioTotal = () => {
-            return productosEnCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0).toFixed(2);
+            return productosEnCarrito.reduce((total, producto) => total + producto.precio * (producto.cantidad || 1), 0).toFixed(2);
           };
 
           if (cargando) {
