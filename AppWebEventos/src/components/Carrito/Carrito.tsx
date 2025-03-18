@@ -187,7 +187,7 @@ const Carrito: React.FC = () => {
                                 
                                 <div className='form-group'>
                                   <label>Cantidad: </label>
-                                  <input type="number" className='form-control' value={producto.cantidad} min="1" onChange={(e) => handleCambiarCantidad(producto.id, parseInt(e.target.value))} />
+                                  <input type="number" className='form-control' value={producto.cantidad || 1} min="1" onChange={(e) => handleCambiarCantidad(producto.id, parseInt(e.target.value))} />
                                 </div>
 
                                   <button className='btn btn-danger' onClick={() => eliminarProductoCarrito(producto/* .id */)}>Eliminar</button>
@@ -201,6 +201,17 @@ const Carrito: React.FC = () => {
                             <h4>Precio Total: ${obtenerPrecioTotal()}</h4>
                       </>
                     )}
+
+                    {mostrarModal && (
+                                    <div className="modal">
+                                        <div className="modal-content">
+                                            <h3>Confirmar eliminación</h3>
+                                            <p>¿Estás seguro de que deseas eliminar este producto del carrito?</p>
+                                            <button onClick={() => setMostrarModal(false)}>Cancelar</button>
+                                            <button onClick={confirmarBorrado}>Eliminar</button>
+                                        </div>
+                                    </div>
+                                )}
           
 
             {/* <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
