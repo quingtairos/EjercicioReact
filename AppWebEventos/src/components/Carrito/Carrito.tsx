@@ -37,22 +37,22 @@ const Carrito: React.FC = () => {
     
 
         
-       /*  useEffect(() => {
-          const unsubscribe = auth.onAuthStateChanged(user => {
-            if (!user) {
+       useEffect(() => {
+          //const unsubscribe = auth.onAuthStateChanged(user => {
+            if (!usuario) {
               navigate('/iniciar-sesion');
-            } else {
+            } /*else {
               fetchCarrito(user.uid);
-            }
-          });
+            }*/
+          }, [usuario, navigate]);
 
 
-          return () => unsubscribe();
-        }); */
+          /*return () => unsubscribe();
+        });*/
 
 
         useEffect(() => {
-          console.log(usuario)
+          //console.log(usuario)
           if (usuario) {
             const obtenerCarrito = async () => {
               try {
@@ -111,6 +111,8 @@ const Carrito: React.FC = () => {
                   productos: actualizarCarrito
                 });
                 setProductosEnCarrito(actualizarCarrito);
+                setMostrarModal(false);
+                setEliminarProducto(null);
               } catch (error) {
                 console.error('Error al eliminar el producto del carrito: ', error);
               }
@@ -121,7 +123,8 @@ const Carrito: React.FC = () => {
 
               .then(() => {*/
                 //setProductosEnCarrito(actualizarCarrito);
-                setMostrarModal(false);
+                /* setMostrarModal(false);
+                setEliminarProducto(null); */
               /* }); */
             }
           };
@@ -134,12 +137,12 @@ const Carrito: React.FC = () => {
                 const actualizarCarrito = productosEnCarrito.map((producto) => producto.id === id ? {...producto, cantidad: newCantidad } : producto);
 
                 await updateDoc(carritoRef, {
-                  productos: actualizarCarrito
+                  productos: actualizarCarrito,
                 });
 
                 setProductosEnCarrito(actualizarCarrito);
               } catch (error) {
-                console.error('Error al actualizar la cantidad del producto');
+                console.error('Error al actualizar la cantidad del producto', error);
               }
             }
 
@@ -202,7 +205,7 @@ const Carrito: React.FC = () => {
                       </>
                     )}
 
-                    {mostrarModal && (
+                    {mostrarModal && eliminarProducto && (
                                     <div className="modal">
                                         <div className="modal-content">
                                             <h3>Confirmar eliminación</h3>
@@ -234,6 +237,6 @@ const Carrito: React.FC = () => {
     
   );
 
-}
+};
 
 export default Carrito;
