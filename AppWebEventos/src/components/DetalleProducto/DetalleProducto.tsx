@@ -4,7 +4,7 @@ import './DetalleProducto.css';
 
 import { db } from '../../firebase/firebaseConfig';
 
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/useAuth.ts';
@@ -55,6 +55,7 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
         if (!isAuthenticated) {
             navigate('/iniciar-sesion');
         } else {
+          console.log({producto, user})
           if (producto && user) {
             //console.log(`${producto.nombre} agregado al carrito.`);
             try {
@@ -66,7 +67,7 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
                 const productosActualizados = [...carritoData.productos, producto];
                 await updateDoc(carritoRef, { productos: productosActualizados });
               } else {
-                await updateDoc(carritoRef, { productos: [producto] });
+                await setDoc(carritoRef, { productos: [producto] });//ESTABLCEMOS EL CARRITO INICIAL CON SET
               }
 
               console.log(`Producto ${producto.nombre} agregado al carrito.`);

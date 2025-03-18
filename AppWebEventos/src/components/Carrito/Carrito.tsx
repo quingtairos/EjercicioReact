@@ -33,6 +33,7 @@ const Carrito: React.FC = () => {
 
         const auth = getAuth();
         const usuario = auth.currentUser;
+    
 
         
        /*  useEffect(() => {
@@ -50,6 +51,7 @@ const Carrito: React.FC = () => {
 
 
         useEffect(() => {
+          console.log(usuario)
           if (usuario) {
             const obtenerCarrito = async () => {
               try {
