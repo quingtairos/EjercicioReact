@@ -7,6 +7,7 @@ import { db } from '../../firebase/firebaseConfig';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import { getAuth } from 'firebase/auth';
 import { useAuth } from '../../hooks/useAuth.ts';
 
 const DetalleProducto: React.FC = ( /* { match } */) => {
@@ -15,6 +16,9 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
     const { isAuthenticated, user } = useAuth();
 
     const [producto, setProducto] = useState<Producto | null>(null);
+
+    const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
+    
 
     const navigate = useNavigate();
     
@@ -27,6 +31,10 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
 //  }; */
 
     useEffect(() => {
+
+                const auth = getAuth();
+                setUsuarioAutenticado(!!auth.currentUser);
+                
         const obtenerProducto = async () => {
           if (id) {
             try {
@@ -95,14 +103,15 @@ const DetalleProducto: React.FC = ( /* { match } */) => {
             {producto.categoria && <p><strong>Categoría:</strong> {producto.categoria}</p>}
            
             <div className="acciones">
-                {isAuthenticated ? (
-                    <button onClick={agregarAlCarrito}>Agregar al Carrito</button>
-                ) : (
-                    <div>
-                        <Link to="/iniciar-sesion" className='btn btn-primary' >Iniciar Sesión para Comprar</Link>
-                    </div>
-                    
-                )}                
+                {usuarioAutenticado ? (
+                    <Link to={`/producto/${producto.id}`} className="btn btn-primary">
+                      Ver detalles
+                    </Link>
+                    ) : (
+                    <Link to="/iniciar-sesion" className="btn btn-primary">
+                      Inicia sesión para ver detalles
+                    </Link>
+                    )}               
             </div>
         </div>
             

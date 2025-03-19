@@ -147,7 +147,6 @@ const Carrito: React.FC = () => {
             }
           };
 
-          //manejamos el cambio de cantidad
           const handleCambiarCantidad = async (id: string, newCantidad: number) => {
             if (usuario) {
               try {

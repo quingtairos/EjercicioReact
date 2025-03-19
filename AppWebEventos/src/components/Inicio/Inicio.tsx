@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { collection, db, getDocs } from '../../firebase/firebaseConfig';
 import { Producto } from '../../types/Producto';
 
-import { getAuth } from 'firebase/auth';
 
 
 
@@ -75,8 +74,6 @@ import festEvento from '../../assets/img/fest.jpeg';
 
         useEffect(() => {
 
-          const auth = getAuth();
-          setUsuarioAutenticado(!!auth.currentUser);
 
           const obtenerProductosDestacados = async () => {
               try {
@@ -144,15 +141,9 @@ import festEvento from '../../assets/img/fest.jpeg';
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                 
-                                {usuarioAutenticado ? (
                                     <Link to={`/producto/${producto.id}`} className="btn btn-primary">
                                         Ver detalles
                                     </Link>
-                                ) : (
-                                    <Link to="/iniciar-sesion" className="btn btn-primary">
-                                        Inicia sesión para ver detalles
-                                    </Link>
-                                )}
 
                             </div>
                             ))}
