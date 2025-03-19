@@ -1,4 +1,4 @@
-import { collection, getDocs, orderBy, query, startAfter, where } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../../firebase/firebaseConfig';
@@ -45,9 +45,9 @@ const ProductoComponent: React.FC = () => {
                     productosQuery = query(productosQuery, where('precio', '>=', precioFiltro[0]), where('precio', '<=', precioFiltro[1]));
                   } */
 
-                    if (lastVisible) {
+                    /* if (lastVisible) {
                         productosQuery = query(productosQuery, startAfter(lastVisible));
-                    }
+                    } */
 
                 /* if (startAfter) {
                     productosQuery = query(productosQuery, startAfter(startAfter));
@@ -55,13 +55,15 @@ const ProductoComponent: React.FC = () => {
 
                 //const productosCollection = collection(db, 'Productos');
                 const productosSnapshot = await getDocs(productosQuery);
-                const productosList = productosSnapshot.docs.map((doc) => ({
-                    //const data = doc.data() as Producto;
-                    id: doc.id,
-                    ...doc.data(),
-                    })) as Producto[];
+                const productosList = productosSnapshot.docs.map((doc) => {
+                    const data = doc.data() as Producto;
+                    return {
+                        id: doc.id,
+                        ...data,
+                    };
+                    });//) as Producto[];
 
-                    setProductos((prevProductos) => [...prevProductos, ...productosList]);
+                    //setProductos((prevProductos) => [...prevProductos, ...productosList]);
 
                     /* const productosFiltrados = productosList.filter((producto) =>
                         producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -73,12 +75,14 @@ const ProductoComponent: React.FC = () => {
 
                 //setProductos(productosFiltrados);
 
+                setProductos(productosList);
 
-                if (productosList.length === 0) {
+
+                /* if (productosList.length === 0) {
                     setHasMore(false);
                 } else {
                     setLastVisible(productosSnapshot.docs[productosSnapshot.docs.length - 1]);
-                }
+                } */
             } catch (error) {
                 console.error('Error al obtener productos:', error);
             } finally {
