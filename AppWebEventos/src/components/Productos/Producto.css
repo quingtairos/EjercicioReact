@@ -1,7 +1,10 @@
-/* .productos {
-    max-width: 800px;
-    margin: 20px auto;
-  } */
+.productos {
+    /* max-width: 800px;
+    margin: 20px auto; */
+    padding-left: 50px;
+  }
+
+  
   
   .busquedaYfiltros {
     margin-bottom: 20px;

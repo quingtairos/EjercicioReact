@@ -147,7 +147,7 @@ const Login: React.FC = () => {
                         </button> */}
                 </form>
 
-                <div>
+                <div className='btn btn-info'>
                     <NavLink to="../Registro">¿No tienes cuenta? Registrate aquí</NavLink>
                 </div>
 
