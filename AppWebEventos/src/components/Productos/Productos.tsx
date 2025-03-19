@@ -77,7 +77,6 @@ const ProductoComponent: React.FC = () => {
                 if (productosList.length === 0) {
                     setHasMore(false);
                 } else {
-                    // Guardar el último producto para la paginación
                     setLastVisible(productosSnapshot.docs[productosSnapshot.docs.length - 1]);
                 }
             } catch (error) {
@@ -110,7 +109,7 @@ const ProductoComponent: React.FC = () => {
         };
 
         const cargarMasProductos = () => {
-            setPagina(pagina + 1); // Incrementar página
+            setPagina(pagina + 1);
         };
 
         //const productosPaginados = productos.slice((pagina - 1) * productosPorPagina, pagina * productosPorPagina);
@@ -118,16 +117,20 @@ const ProductoComponent: React.FC = () => {
     
 
     if (loading) {
-        return <div>Cargando productos...</div>;
+        return <div className='text-center'>Cargando productos...</div>;
     }
 
     return (
         <div className="productos">
-            <h1>productos</h1>
-             <div className="filtros">
+            <h1 className="my-4">productos</h1>
+            <div className="d-flex justify-content-between mb-4">
+            <div className="col-md-3 filtros">
                 <input type="text" placeholder="Buscar productos..." value={busqueda} onChange={/* (e) => setBusqueda(e.target.value) */ manejarCambioBusqueda} />
+            </div>
+             
 
-                <select onChange={/* (e) => setCategoriaFiltro(e.target.value) */manejarCambioCategoria} value={categoriaFiltro}>
+             <div className='col-md-3'>
+                <select className='form-select' onChange={/* (e) => setCategoriaFiltro(e.target.value) */manejarCambioCategoria} value={categoriaFiltro}>
                     <option value="">Filtrar por categoría</option>
                     <option value="fiesta">Fiesta</option>
                     <option value="bodas">Bodas</option>
@@ -135,12 +138,15 @@ const ProductoComponent: React.FC = () => {
                     <option value="catering">Catering</option>
                     <option value="laboral">laboral</option>
                 </select>
+             </div>
 
+            <div className="col-md-3">
                 <div className="filtro-precio">
                     <label>Rango de precio:</label>
                     <input type="number" value={precioFiltro[0]} onChange={/* (e) => setPrecioFiltro([parseInt(e.target.value), precioFiltro[1]]) */ manejarCambioPrecio} placeholder="Min" />
                     <input type="number" value={precioFiltro[1]} onChange={(e) => setPrecioFiltro([precioFiltro[0], parseInt(e.target.value)])} placeholder="Max" />
                 </div>
+            </div>
 
                 {/* <input type="range" min="0" max="1000" value={priceFilter[1]} onChange={manejarCambioPrecio} />
                 <span>Rango de precio: {priceFilter[0]}€ - {priceFilter[1]}€</span> */}
@@ -149,18 +155,22 @@ const ProductoComponent: React.FC = () => {
             {productos.length === 0 ? (
                 <p>No hay productos disponibles.</p>
             ) : (
-                <div className='productos-lista'>
+                <div className='row row-cols-1 row-cols-md-3 g-4'>
                     {productos.map((producto) => (
-                        <div key={producto.id} className="card" style={{ width: '18rem' }}>
-                            <div className="producto">
+                        <div key={producto.id} className="col" style={{ width: '18rem' }}>
+                            <div className="card">
+                            <img src={producto.imagen || 'path-to-default-image.jpg'} className="card-img-top" alt={producto.nombre} />
                                 <div className="card-body">
                                     <h5 className="card-title">{producto.nombre || 'Sin nombre'}</h5>
                                     <p className="card-text">Precio: ${producto.precio  ? `${producto.precio}€` : 'Precio no disponible'}</p>
                                     <p className="card-text">Descripción: {producto.descripcion || 'Sin descripción'}</p>
+
+                                    <Link to={`/producto/${producto.id}`} className="btn btn-primary">Ver detalles</Link>
+
                                 </div>
 
 
-                            <Link to={`/producto/${producto.id}`} className="btn btn-link">Ver detalles</Link>
+                           {/*  <Link to={`/producto/${producto.id}`} className="btn btn-primary">Ver detalles</Link> */}
 
                             </div>
                         </div>
@@ -172,24 +182,20 @@ const ProductoComponent: React.FC = () => {
                 
             )}
 
-            <div className="paginacion">
+            <div className="d-flex justify-content-center mt-4 paginacion">
                     {/* <button onClick={() => setPagina(pagina - 1)} disabled={pagina === 1}>
                     Anterior
                     </button> */}
 
                 {hasMore ? (
-                    <button onClick={cargarMasProductos}>Cargar más</button>
+                    <button className="btn btn-secondary" onClick={cargarMasProductos}>Cargar más</button>
                     ) : (
                         <p>No hay más productos.</p>
                     )}
 
                     <span>Página {pagina}</span>
-                    <button
-                    onClick={() => setPagina(pagina + 1)}
-                    disabled={pagina * productosPorPagina >= productos.length}
-                    >
-                    Siguiente
-                    </button>
+
+                    <button onClick={() => setPagina(pagina + 1)} disabled={pagina * productosPorPagina >= productos.length}>Siguiente</button>
             </div>
 
             {/* <div className="card" style={{ width: '18rem' }}>
