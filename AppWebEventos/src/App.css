@@ -1,6 +1,6 @@
 #root {
   max-width: 1280px;
-  /*margin: 0 auto;
+  margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
 }
@@ -93,6 +93,7 @@ button {
   .container {
     padding: 1rem;
   }
+  
 }
 
 @media (max-width: 480px) {

@@ -6,6 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { collection, db, getDocs } from '../../firebase/firebaseConfig';
 import { Producto } from '../../types/Producto';
 
+import { getAuth } from 'firebase/auth';
+
+
 
 import festEvento from '../../assets/img/fest.jpeg';
 
@@ -67,27 +70,33 @@ import festEvento from '../../assets/img/fest.jpeg';
 
         const [productosDestacados, setProductos] = useState<Producto[]>([]);
         const [loading, setLoading] = useState(true);
-       
+        const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
+
 
         useEffect(() => {
+
+          const auth = getAuth();
+          setUsuarioAutenticado(!!auth.currentUser);
+
           const obtenerProductosDestacados = async () => {
               try {
-                  const productosCollection = collection(db, 'Productos');
-                  const productosSnapshot = await getDocs(productosCollection);
-                  const productosList = productosSnapshot.docs.map((doc) => {
-                      const data = doc.data() as Producto;
-                      return {
-                          id: doc.id,
-                          ...data,  
-                      };
-                  }).filter((producto) => producto.destacado); 
-                  setProductos(productosList);
-              } catch (error) {
-                  console.error('Error al obtener productos:', error);
-              } finally {
-                  setLoading(false);
-              }
-          };
+                const productosCollection = collection(db, 'Productos');
+                const productosSnapshot = await getDocs(productosCollection);
+                const productosList = productosSnapshot.docs.map((doc) => {
+                    const data = doc.data() as Producto;
+                    return {
+                      id: doc.id,
+                      ...data,
+                    };
+                }).filter((producto) => producto.destacado); 
+                
+                setProductos(productosList);
+            } catch (error) {
+                console.error('Error al obtener productos:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
       
           obtenerProductosDestacados();
       }, []);
@@ -117,8 +126,8 @@ import festEvento from '../../assets/img/fest.jpeg';
                         <p>Teléfono: +34 692 456 789</p>
 
                         <p>Redes Sociales: 
-                            <a href="https://www.facebook.com">Facebook</a> | 
-                            <a href="https://www.instagram.com">Instagram</a>
+                            <a href="https://www.facebook.com" className='btn btn-primary'>Facebook</a> | 
+                            <a href="https://www.instagram.com" className='btn btn-primary'>Instagram</a>
                         </p>
                 </div>
 
@@ -135,7 +144,15 @@ import festEvento from '../../assets/img/fest.jpeg';
                                 <p>Precio: ${producto.precio}</p>
                                 {/* <a href={`/detalles/${producto.id}`}>Ver detalles</a> */}
                                 
-                                <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+                                {usuarioAutenticado ? (
+                                    <Link to={`/producto/${producto.id}`} className="btn btn-primary">
+                                        Ver detalles
+                                    </Link>
+                                ) : (
+                                    <Link to="/iniciar-sesion" className="btn btn-primary">
+                                        Inicia sesión para ver detalles
+                                    </Link>
+                                )}
 
                             </div>
                             ))}
