@@ -41,9 +41,27 @@ const Carrito: React.FC = () => {
           //const unsubscribe = auth.onAuthStateChanged(user => {
             if (!usuario) {
               navigate('/iniciar-sesion');
-            } /*else {
-              fetchCarrito(user.uid);
-            }*/
+            } else {
+              const obtenerCarrito = async () => {
+                  try {
+                      const carritoRef = doc(db, 'carrito', usuario.uid);
+                      const docSnap = await getDoc(carritoRef);
+                      if (docSnap.exists()) {
+                          setProductosEnCarrito(docSnap.data().productos || []);
+                      } else {
+                          console.log('No se encontraron productos en el carrito');
+                      }
+                  } catch (error) {
+                      console.error('Error al obtener los productos del carrito: ', error);
+                  } finally {
+                      setCargando(false);
+                  }
+              };
+
+              obtenerCarrito();
+
+            }
+  
           }, [usuario, navigate]);
 
 
@@ -51,7 +69,7 @@ const Carrito: React.FC = () => {
         });*/
 
 
-        useEffect(() => {
+        /*useEffect(() => {
           //console.log(usuario)
           if (usuario) {
             const obtenerCarrito = async () => {
@@ -72,7 +90,7 @@ const Carrito: React.FC = () => {
       
             obtenerCarrito();
           }
-        }, [usuario]);
+        }, [usuario]);*/
 
 
         /* const fetchCarrito = (userId: string) => {

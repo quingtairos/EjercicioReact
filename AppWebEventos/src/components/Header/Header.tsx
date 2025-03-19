@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                         </>
                     )}
                 </ul>
-                <button className="menu-toggle" onClick={toggleMenu}>
+                <button className="menu-toggle" onClick={toggleMenu} aria-label="Abrir menú">
                     ☰
                 </button>
             </nav>
